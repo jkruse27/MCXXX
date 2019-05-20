@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 15</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 15 - Campeonato de video game PES</h1><p>Prazo de entrega: <strong>31/05/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Luiz Fernando Bittencourt
+<em>Professor:</em> Eduardo Xavier</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p><a href="PES2018-696x392.png" target="_blank" rel="noopener noreferrer"><img src="PES2018-696x392.png" alt="Discurso" style="max-width:100%;"></a></p>
+<p>Seu grupo de amigos resolveu tirar o final de semana para jogar PES (Pro Evolution Soccer), uma série de videogames de futebol, produzidos e publicados pela <em>Konami</em>. A regra da brincadeira era: cada vez que terminava um jogo, quem perdesse cedia seu controle para o próximo jogador. Entretanto, uma das pessoas passou a vencer todas as outras ininterruptamente, o que fez com que essa pessoa não saísse do videogame. Indignadas pela falta de rotatividade no jogo, as outras pessoas resolveram realizar um campeonato. As regras do campeonato seriam semelhantes as do Campeonato Brasileiro, modalidade de campeonato também conhecida como <em>pontos corridos</em>. Nessa modalidade, todos os times se enfrentam. A cada vitória são computados 3 pontos para o time vencedor e para cada empate 1 ponto para os times envolvidos. Ao Final do campeonato, o time que tiver mais pontos vence. Depois de alteradas as regras da brincadeira, você e seus amigos realizaram o campeonato e registraram todas as partidas disputadas. Por ter conhecimentos de programação, você foi a pessoa escolhida do grupo para computar a tabela final do campeonato.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>Seu objetivo é criar um programa que leia o arquivo com os registros das partidas e compute a tabela final do campeonato. A tabela deverá conter o nome do time, a pontuação, o número de vitórias, o saldo de gols e os gols prós. A tabela deverá ser apresentada decrescentemente ordenada pela quantidade de pontos. Em caso de empate no número de pontos, os critérios de desempate, em ordem de precedência, são: número de vitórias, saldo de gols e gols prós. Lembre-se que uma vitória vale 3 pontos e um empate vale 1 ponto. Abaixo temos um exemplo de uma tabela ordenada.</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Pontos</th>
+<th>Número de vitórias</th>
+<th>Saldo de gols</th>
+<th>Gols prós</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ana</td>
+<td>8</td>
+<td>2</td>
+<td>3</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Jose</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Joao</td>
+<td>5</td>
+<td>1</td>
+<td>-2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Carlos</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Maria</td>
+<td>4</td>
+<td>1</td>
+<td>-5</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>No programa, a tabela é representada como uma lista de listas, onde cada lista interna possui os dados de um time: uma string com o nome do time, o número de pontos, o número de vitórias, saldo de gols, e gols marcados. Por exemplo, para a tabela apresentada, sua representação é <code>[['Ana', 8, 2, 3, 10], ['Jose', 5, 1, 2, 11], ['Joao', 5, 1, -2, 3], ['Carlos', 4, 1, 2, 16], ['Maria', 4, 1, -5, 8]]</code>.</p>
+<h3>
+<a id="user-content-múltiplos-arquivos-e-função-principal" class="anchor" href="#m%C3%BAltiplos-arquivos-e-fun%C3%A7%C3%A3o-principal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Múltiplos Arquivos e Função Principal</h3>
+<p>Neste laboratório vamos utilizar o conceito de dividir o código em múltiplos arquivos. Quando se implementa programas extensos é comum separar o código em vários arquivos, onde cada arquivo implementa um conjunto de funções relacionadas entre si.  Isto facilita a manutenção e a leitura do código.</p>
+<p>Para esse laboratório você só deverá criar um arquivo, chamado lab15.py, que contenha as seguintes funções:</p><ul>
+<li>
+<p><strong>atualizaTabela:</strong> Atualiza a tabela com as informações de um jogo.<br>
+OBSERVAÇÃO: nesse momento não é necessário ordenar a tabela, apenas inserir as informações.</p>
+</li>
+<li>
+<p><strong>comparaTimes:</strong> Recebe time1 e time2 como parâmetros e deve retornar: 1, se o time1 deve estar em uma colocação melhor do que a do time2; -1, se o time1 deve estar em uma colocação pior do que a do time2; 0, se time1 e time2 tem os mesmos pontos, vitórias, saldo e gols. OBSERVAÇÃO: A função <strong>comparaTimes</strong> deve ser utilizada pela função <strong>ordenaTabela</strong>.</p>
+</li>
+<li>
+<p><strong>ordenaTabela:</strong> Ordena a tabela do campeonato de acordo com as especificações do enunciado do laboratório. OBSERVAÇÃO: Ao ordenar a tabela, você pode assumir que não existem dois times com os mesmos pontos, vitórias, saldo e gols.</p>
+</li>
+<li>
+<p><strong>imprimeTabela:</strong> imprime a tabela do campeonato de acordo com as especificações do enunciado do laboratório.</p>
+</li>
+</ul>
+<p>Template do arquivo a ser criado:</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-c"><span class="pl-c">#</span>!/usr/bin/env python3</span>
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+<span class="pl-c"><span class="pl-c">#</span> Funcao: atualizaTabela</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Parametros:</span>
+<span class="pl-c"><span class="pl-c">#</span>   tabela: uma matriz com os dados da tabela do campeonato</span>
+<span class="pl-c"><span class="pl-c">#</span>   jogo: string contendo as informações de um jogo no formato especificado no lab.</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Descrição:</span>
+<span class="pl-c"><span class="pl-c">#</span>   Deve inserir as informações do parametro 'jogo' na tabela.</span>
+<span class="pl-c"><span class="pl-c">#</span>   OBSERVAÇÃO: nesse momento não é necessário ordenar a tabela, apenas inserir as informações.</span>
+<span class="pl-k">def</span> <span class="pl-en">atualizaTabela</span>(<span class="pl-smi">tabela</span>, <span class="pl-smi">jogo</span>):
+<span class="pl-c"><span class="pl-c">#</span>  -- INSIRA SEU CÓDIGO AQUI -- #</span>
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+<span class="pl-c"><span class="pl-c">#</span> Funcao: comparaTimes</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Parametros:</span>
+<span class="pl-c"><span class="pl-c">#</span>   time1: informações de um time</span>
+<span class="pl-c"><span class="pl-c">#</span>   time2: informações de um time</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Descricão:</span>
+<span class="pl-c"><span class="pl-c">#</span>   retorna 1, se o time1&gt;time2, retorna -1, se time1&lt;time2, e retorna 0, se time1=time2</span>
+<span class="pl-c"><span class="pl-c">#</span>   Observe que time1&gt;time2=true significa que o time1 deve estar em uma posição melhor do que o time2 na tabela.</span>
+<span class="pl-k">def</span> <span class="pl-en">comparaTimes</span>(<span class="pl-smi">time1</span>, <span class="pl-smi">time2</span>):
+<span class="pl-c"><span class="pl-c">#</span>  -- INSIRA SEU CÓDIGO AQUI -- #</span>
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+
+
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+<span class="pl-c"><span class="pl-c">#</span> Funcao: ordenaTabela</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Parametros:</span>
+<span class="pl-c"><span class="pl-c">#</span>   tabela: uma matriz com os dados da tabela do campeonato.</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Descricão:</span>
+<span class="pl-c"><span class="pl-c">#</span>   Deve ordenar a tabela com campeonato de acordo com as especificaçoes do lab.</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-k">def</span> <span class="pl-en">ordenaTabela</span>(<span class="pl-smi">tabela</span>):
+<span class="pl-c"><span class="pl-c">#</span>  -- INSIRA SEU CÓDIGO AQUI -- #</span>
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+
+
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span>
+<span class="pl-c"><span class="pl-c">#</span> Funcao: imprimeTabela</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Parametros:</span>
+<span class="pl-c"><span class="pl-c">#</span>   tabela: uma matriz com os dados da tabela do campeonato.</span>
+<span class="pl-c"><span class="pl-c">#</span></span>
+<span class="pl-c"><span class="pl-c">#</span> Descrição:</span>
+<span class="pl-c"><span class="pl-c">#</span>   Deve imprimir a tabela do campeonato de acordo com as especificações do lab.</span>
+<span class="pl-k">def</span> <span class="pl-en">imprimeTabela</span>(<span class="pl-smi">tabela</span>):
+<span class="pl-c"><span class="pl-c">#</span>  -- INSIRA SEU CÓDIGO AQUI -- #</span>
+<span class="pl-c"><span class="pl-c">#</span>*******************************************************************************</span></pre></div>
+<p>A função principal (<strong>main</strong>) será fornecida em um arquivo separado, chamado <a href="aux/lab15_main.py"><code>lab15_main.py</code></a>.<br>Um link para ele também está disponível na página da tarefa.</p>
+<p>Função main:</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-k">import</span> sys, os
+sys.path.insert(<span class="pl-c1">0</span>,os.getcwd())
+<span class="pl-k">import</span> lab15 <span class="pl-k">as</span> lab
+
+<span class="pl-c"><span class="pl-c">#</span> Função Main</span>
+<span class="pl-k">if</span> <span class="pl-c1">__name__</span> <span class="pl-k">==</span> <span class="pl-s"><span class="pl-pds">"</span>__main__<span class="pl-pds">"</span></span>:
+    <span class="pl-c"><span class="pl-c">#</span> Ler a quantidade de jogadores</span>
+    n <span class="pl-k">=</span> <span class="pl-c1">int</span>(<span class="pl-c1">input</span>())
+    tabela <span class="pl-k">=</span> []
+    <span class="pl-c"><span class="pl-c">#</span> Ler os nomes dos jogadores e inicializa a tabela</span>
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(n):
+        nomeTime <span class="pl-k">=</span> <span class="pl-c1">input</span>()
+        <span class="pl-c"><span class="pl-c">#</span> inicializa os pontos, numero de vitorias, saldo de gols, gols pros com '0'</span>
+        time <span class="pl-k">=</span> [nomeTime, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>]
+        tabela.append(time)
+
+    <span class="pl-c"><span class="pl-c">#</span> calculo da quantidade de jogos do campeonato</span>
+    qtdJogos <span class="pl-k">=</span> (n<span class="pl-k">*</span>(n<span class="pl-k">-</span><span class="pl-c1">1</span>))<span class="pl-k">/</span><span class="pl-c1">2</span>
+    qtdJogos <span class="pl-k">=</span> <span class="pl-c1">int</span>(qtdJogos)
+
+    <span class="pl-c"><span class="pl-c">#</span> Ler os jogos e atualiza a tabela</span>
+    <span class="pl-k">for</span> i <span class="pl-k">in</span> <span class="pl-c1">range</span>(qtdJogos):
+        jogo <span class="pl-k">=</span> <span class="pl-c1">input</span>()
+        lab.atualizaTabela(tabela, jogo)
+
+    <span class="pl-c"><span class="pl-c">#</span> Ordena a tabela</span>
+    lab.ordenaTabela(tabela)
+
+    <span class="pl-c"><span class="pl-c">#</span> Imprime a tabela</span>
+    lab.imprimeTabela(tabela)</pre></div>
+<p>Para executar o seu programa em Python 3, basta executar o arquivo <code>lab15_main.py</code>. O arquivo <code>lab15.py</code> deverá estar na mesma pasta e será chamado pelo primeiro.</p><pre><code>python3 lab15_main.py</code></pre>
+<p>Você deve submeter ao <em>SuSy</em> o arquivo (lab15.py). Um modelo do arquivo a ser submetido e o arquivo auxiliar (lab15_main.py) podem ser encontrado na página da tarefa:</p><ul>
+<li><a href="aux/lab15_main.py"><code>lab15_main.py</code></a></li><li><a href="aux/lab15.py"><code>lab15.py</code></a></li></ul>
+<h2>
+<a id="user-content-reforçando" class="anchor" href="#refor%C3%A7ando" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reforçando</h2>
+<p>Neste laboratório seu trabalho é implementar as funções descritas na seção anterior. A
+função <code>main()</code>, que é fornecida no arquivo <code>lab15_main.py</code>,se encarregará de charmar as funções que você implementou.</p>
+<p>Você <strong>não deve</strong> submeter o arquivo <code>lab15_main.py</code>para o <em>SuSy</em>, somente o arquivo <code>lab15.py</code>.</p><p>As sessões abaixo, de <a href="#entrada">Entrada</a> e <a href="#sa%C3%ADda">Saída</a>, descrevem os formatos de entrada e saída para o programa.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A primeira linha da entrada é um inteiro <code>n</code> que indica a quantidade de times no campeonato. As <code>n</code> linhas seguintes contém os nomes dos times. Após a sequência de times, temos uma sequência de partidas. Por exemplo, digamos que em uma das partidas o <code>José</code> venceu o <code>Marcos</code> com o placar de 3 a 0, o registro da partida estará no seguinte formato: <code>José 3 x 0 Marcos</code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída é a tabela final do campeonato, sendo que cada linha da tabela corresponde aos dados de um time. Uma linha tem o seguinte formato: <code>NOME_TIME, PONTOS, NUMERO_DE_VITORIAS, SALDO_DE_GOLS, GOLS_PROS</code>.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>5
+Carlos
+Maria
+Jose
+Joao
+Ana
+Carlos 3 X 4 Maria
+Carlos 5 X 5 Jose
+Carlos 5 X 1 Joao
+Carlos 3 X 4 Ana
+Maria 1 X 5 Jose
+Maria 0 X 0 Joao
+Maria 3 X 5 Ana
+Jose 0 X 2 Joao
+Jose 1 X 1 Ana
+Joao 0 X 0 Ana
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>Ana, 8, 2, 3, 10
+Jose, 5, 1, 2, 11
+Joao, 5, 1, -2, 3
+Carlos, 4, 1, 2, 16
+Maria, 4, 1, -5, 8
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>9
+Carlos
+Maria
+Jose
+Joao
+Ana
+Cristiano
+Ronaldo
+Rodriguinho
+Diego
+Carlos 4 X 4 Maria
+Carlos 4 X 0 Jose
+Carlos 3 X 0 Joao
+Carlos 0 X 0 Ana
+Carlos 3 X 0 Cristiano
+Carlos 4 X 5 Ronaldo
+Carlos 5 X 2 Rodriguinho
+Carlos 3 X 3 Diego
+Maria 2 X 3 Jose
+Maria 0 X 5 Joao
+Maria 4 X 3 Ana
+Maria 1 X 3 Cristiano
+Maria 1 X 5 Ronaldo
+Maria 4 X 3 Rodriguinho
+Maria 1 X 2 Diego
+Jose 2 X 4 Joao
+Jose 4 X 1 Ana
+Jose 2 X 3 Cristiano
+Jose 5 X 2 Ronaldo
+Jose 3 X 2 Rodriguinho
+Jose 0 X 5 Diego
+Joao 0 X 4 Ana
+Joao 0 X 1 Cristiano
+Joao 1 X 1 Ronaldo
+Joao 5 X 4 Rodriguinho
+Joao 1 X 0 Diego
+Ana 4 X 0 Cristiano
+Ana 1 X 1 Ronaldo
+Ana 5 X 2 Rodriguinho
+Ana 0 X 4 Diego
+Cristiano 4 X 0 Ronaldo
+Cristiano 1 X 2 Rodriguinho
+Cristiano 2 X 4 Diego
+Ronaldo 2 X 1 Rodriguinho
+Ronaldo 3 X 5 Diego
+Rodriguinho 3 X 0 Diego
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>Diego, 16, 5, 10, 23
+Carlos, 15, 4, 12, 26
+Joao, 13, 4, 1, 16
+Cristiano, 12, 4, -2, 14
+Jose, 12, 4, -4, 19
+Ana, 11, 3, 3, 18
+Ronaldo, 11, 3, -3, 19
+Maria, 7, 2, -11, 17
+Rodriguinho, 6, 2, -6, 19
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>8
+Carlos
+Maria
+Jose
+Joao
+Ana
+Cristiano
+Ronaldo
+Rodriguinho
+Carlos 4 X 2 Maria
+Carlos 5 X 2 Jose
+Carlos 2 X 5 Joao
+Carlos 2 X 5 Ana
+Carlos 4 X 3 Cristiano
+Carlos 0 X 5 Ronaldo
+Carlos 5 X 3 Rodriguinho
+Maria 2 X 3 Jose
+Maria 2 X 3 Joao
+Maria 3 X 5 Ana
+Maria 4 X 4 Cristiano
+Maria 5 X 4 Ronaldo
+Maria 3 X 2 Rodriguinho
+Jose 5 X 0 Joao
+Jose 4 X 0 Ana
+Jose 5 X 1 Cristiano
+Jose 5 X 2 Ronaldo
+Jose 5 X 1 Rodriguinho
+Joao 3 X 2 Ana
+Joao 1 X 3 Cristiano
+Joao 2 X 2 Ronaldo
+Joao 2 X 4 Rodriguinho
+Ana 5 X 4 Cristiano
+Ana 1 X 2 Ronaldo
+Ana 2 X 3 Rodriguinho
+Cristiano 1 X 2 Ronaldo
+Cristiano 3 X 2 Rodriguinho
+Ronaldo 4 X 4 Rodriguinho
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>Jose, 18, 6, 18, 29
+Carlos, 12, 4, -3, 22
+Ronaldo, 11, 3, 3, 21
+Joao, 10, 3, -4, 16
+Ana, 9, 3, -1, 20
+Maria, 7, 2, -4, 21
+Cristiano, 7, 2, -4, 19
+Rodriguinho, 7, 2, -5, 19
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab15.py</code>.</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos em python irá considerar o comando:<br>
+<code>python3 lab15_main.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

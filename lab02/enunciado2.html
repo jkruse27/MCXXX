@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 02</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 02 - Rogue 102: A Aliança Contra-Ataca</h1><p>Prazo de entrega: <strong>30/03/2019 00:00:01</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professores:</em> Eduardo C. Xavier e Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>Alerta de transmissão:</p>
+<p>"Saudações agente. Não há tempo para explicar. Recebemos informações de que uma nave do Império lançará uma bomba termonuclear em nossa unidade de transmissão no planeta Linha. Mas um agente da Aliança Rebelde conseguiu se infiltrar na nave do Império e colocou um micro esplosivo na parte exterior da bomba, de tal forma que quando acionado causa uma micro-explosão criando uma força de empuxo (<em>thrust</em>) capaz de desviar a bomba termonuclear. A força de empuxo do micro explosivo, se ativado no momento exato, irá impulsionar a bomba para um outro ponto no mesmo planeta Linha, ponto este que contém uma base de reabastecimento pertencente ao Império."</p>
+<p>"A bomba será lançada do espaço exatamente sobre a nossa unidade de transmissão, estando a nave a uma altura <code>h</code> da superfície do planeta Linha. O planeta Linha é caracterizado por ter uma faixa de terra muito estreita mas muito comprida, estando a nossa base de transmissão a uma distância <code>d</code> da base de reabastecimento do Império.  Assim que a bomba for lançada, nosso sistema de defesa irá detectar a altura <code>h</code> que a nave está e a velocidade <code>v<sub>b</sub></code> de queda da bomba que é constante pois a força gravitacional do planeta Linha é despresível.  O micro-explosivo quando acionado gera uma força de empuxo de <code>T</code> newtons no eixo <code>x</code> em direção à base do Império.  O peso da bomba é um kilograma, de modo que, quando ativado o micro-explosivo, a bomba termonuclear acelerará um metro por segundo por cada newton do micro-explosivo em direção à base do Império. O mecanismo exercerá esta força apenas uma vez, causando uma velocidade constante no sentido oposto.</p>
+<p>"Estamos enviando o mapa abaixo com uma representação da configuração da situação inicial."</p>
+<p><a href="2d1.png" target="_blank" rel="noopener noreferrer"><img src="2d1.png" alt="Representação da configuração inicial" width="400" style="max-width:100%;"></a></p>
+<p>"A sua missão é fazer um programa que, recebendo estas informações, calcula imediatamente quanto tempo esperar até ativar o micro-explosivo."</p>
+<p><a href="2d2.png" target="_blank" rel="noopener noreferrer"><img src="2d2.png" alt="Dispositivo é ativado" width="400" style="max-width:100%;"></a></p>
+<p>"Que a força esteja com você..."</p>
+<p>Final da transmissão.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>Você deve criar um programa que calcula quanto tempo esperar para ativar o micro explosivo de tal forma que a força de empuxo resultante desvie a bomba para atingir a base de reabastecimento do Império.
+Todas as medidas estão em metros ou metros/segundo.</p>
+<p>As equações que você precisa saber são:</p>
+<ul>
+  <li>Seja <code>v</code> a velocidade de um objeto, <code>t</code> o tempo de observação do objeto e <code>d</code> a distância percorrida pelo objeto, então <code>t = d/v</code>.
+  </li>
+<li>Para este laboratório, consideramos que a massa da bomba é de 1 kilograma, então uma força de empuxo de <code>N</code> newtons aplicada na bomba gerará uma velocidade de <code>N</code> m/s no sentido contrário.</li>
+  <li>Considere que as velocidades são constantes pois não há atrito do ar e nem força gravitacional.</li>
+</ul>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste em 4 valores reais, um em cada linha, contendo respectivamente, os valores de altura <code>h</code> da nave, a velocidade de queda da bomba <code>v<sub>b</sub></code>, a distância <code>d</code> da base rebelde até a base do Império, e a força de empuxo do micro explosivo <code>T</code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Como saída o seu programa deverá imprimir o valor do tempo, em segundos, em que deverá ser acionado o micro explosivo.</p>
+<p>Os valores impressos devem conter 3 casas decimais.
+Você poderá usar o comando abaixo para imprimir a resposta:</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-c1">%.3f</span><span class="pl-pds">"</span></span> % t);</pre></div>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>3
+1
+1
+1
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>2.000
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>3
+1
+1
+0.5
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>1.000
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>6
+2
+2
+2
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>2.000
+</code></pre>
+<h3>
+<a id="user-content-teste-04" class="anchor" href="#teste-04" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 04</h3>
+<p><a href="dados/arq04.in">Entrada</a></p>
+<pre><code>62.82484376460622
+1.3524716316448184
+11.70021586724554
+2.836106312877929
+</code></pre>
+<p><a href="dados/arq04.res">Saída</a></p>
+<pre><code>42.326
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab02.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos considerar o comando:__
+<code>python3 lab02.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 12</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 12 - Proteja a base rebelde!</h1><p>Prazo de entrega: <strong>10/05/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>Alerta de transmissão:</p>
+<p>"Saudações agente. Fomos reportados sobre o mau funcionamento do radar na base em que você se encontra, e que a equipe de reparação não chegará a tempo, antes dos ataques contra sua base. Sua base é de fundamental importância no planeta XI35-ALPHA, pois sua localização é ideal para interceptação de ataques de naves do império e nos proporciona uma enorme vantagem.</p>
+<p>Temos uma missão para você agente, em caso de sucesso você pode evitar a total destruição de sua base, caso contrário, todos na base serão mortos pelo ataque das bases do império que estão ao seu redor.<br>
+Os detalhes da missão estão no arquivo codificado que você acabou de receber.<br>
+Que a força esteja com você."</p>
+<p><a href="example.png" target="_blank" rel="noopener noreferrer"><img src="example.png" alt="Exemplo" style="max-width:100%;"></a></p>
+<p>Informações da missão: Temos um agente infiltrado no império que sabe exatamente qual base imperial irá efetuar um ataque contra vocês. Para que vocês tenham a chance de se defender, o agente informará a direção da base e a elevação do canhão para que vocês consigam realizar um ataque antes deles. Para não levantar suspeitas o agente utilizará palavras-chave em suas publicações na rede social FACESTAR. Essa rede social permite publicações de no máximo 1000 caracteres. As interpretações das palavras-chave devem ser feitas de forma rápida, caso contrário vocês não terão tempo de realizar um ataque primeiro. Segue o significado das palavras-chave:</p>
+<p>Direção:<br>
+mercurio = N<br>
+venus = NE<br>
+terra = L<br>
+marte = SE<br>
+jupiter = S<br>
+saturno = SO<br>
+urano = O<br>
+netuno = NO</p>
+<p>Elevação do canhão:<br>
+verde = 30<br>
+amarelo = 45<br>
+vermelho = 60</p>
+<p>Em cada texto publicado haverá palavras diversas apenas para disfarçar as palavras-chave acima, mas cada palavra
+chave de direção sempre aparece antes de uma palavra chave de elevação de canhão. Em um texto pode haver um
+número variável de indicações de bases para você realizar o ataque.</p>
+<p>Para o exemplo abaixo</p>
+<pre><code>Apos o eclipse em mercurio planeta vermelho proseguimos viagem para jupiter vislumbrando um grande verde onde pudemos vizualisar o belo netuno vermelho rodopiando pelo infinito
+</code></pre>
+<p>temos os seguintes ataques a serem feitos nas localidades</p>
+<pre><code>N - 60
+S - 30
+NO - 60
+</code></pre>
+
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>Como programador jedy da aliança rebelde, você deve criar um programa que, dada uma publicação na rede social FACESTAR encontra quais palavras-chave estão presentes e informa para qual direção e elevação o canhão da base deve ser direcionado.</p>
+<p>Observações:</p>
+<ul>
+<li>No texto podem haver mais de uma direção e elevação, você deve determinar todas elas seguindo o padrão utilizado pelo agente infiltrado.</li>
+<li>O texto não possui sinais de pontuação.</li>
+<li>O seu programa deve ser <i>case insensitive</i>, não importando, para duas palavras serem as mesmas, se as letras das palavras estão maíusculas ou minúsculas. Por exemplo, as palavras Vermelho, vermelho, verMELHO são todas formas válidas para a elevação 60.</li>
+</ul>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste de uma única string contendo no máximo 1000 caracteres.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída deverá conter uma linha por direção e elevação encontrada e separadas por ' - ' com espaço antes e depois do hifen.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>dANcantE TeRRA cOquEiRAl padRaO feCHAdo AtRAVESsadOr AmarelO SIsMoGraFO DeSPRopOSiTO Venus oFERecIDAS CoRvETA BIoMecANiCo SImbiontICO veRdE raMeLa vENtar nutRIeNtE meRcuRIO RecolOCAR eSTErIliZaCAO REVISao iNTerrOgaDOR ArcebiSPal VERMElho BEBacO rECONSOlIdaR nEPeriAnO
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>L - 45
+NE - 30
+N - 60
+</code></pre>
+<h3>
+<a id="user-content-teste-04" class="anchor" href="#teste-04" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 04</h3>
+<p><a href="dados/arq04.in">Entrada</a></p>
+<pre><code>GoRIla fUNeBREs ROTuLagem nEtUNo OraTorio vErmeLHo esquIva eMbATe traJetoriA EXTRaVIo uRANO cLIticO VERmeLhO ESPOrTIVO cRoCantE saBotAgem merCUriO pApEL vEntOSIdade INtEMPeSTiVo INStituCIonalIZaCao VErDe poLiPO conflITo ALVorocaMEnTo nEtUno desseRvICO fausTo EmBoneCADo AmARelO dIgNo PARTO NAvajO emPoLGAcAo imPerMeabiLIDaDE URanO ReconfORtaNtE TELUGu peNeirA AGlOMERaCao imPoSSiBILIdaDe veRde chiaDeIRa trIANGuLAr FANTasistA sAturNO diFIcIl Plangente nOCiVidade HORTO cRACk vErmelhO bASbaqUiCe EnroLADOr reElegEr ClINicAR CafEiCuLTOR teRrA coMovEr PoSsEs boTAo APAssivAr BLAsFEmaR VeRdE BuROCRATiZaCaO esTERcAr AFOBAdo AlUMINiFerO
+</code></pre>
+<p><a href="dados/arq04.res">Saída</a></p>
+<pre><code>NO - 60
+O - 60
+N - 30
+NO - 45
+O - 30
+SO - 60
+L - 30
+</code></pre>
+<h3>
+<a id="user-content-teste-12" class="anchor" href="#teste-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 12</h3>
+<p><a href="dados/arq12.in">Entrada</a></p>
+<pre><code>ApolO SalvaDoR ESPEcULAtiVo tErRA mEDIcINal VErMelHo LOGIcO Saturno BexIgA AZUcrinadO aMareLO bEIsEboL vaLEnTe cHilique URAnO ApaVoRanTE rAMApItECo LesBiaNiSmo aMaReLO aLmAnaqUe SOFiSmA ROCk ARrePIAR berIbERI jUpItER amaReLo SoBREmANEIRA hUmILHADo punGUiSta doLOSO trIUNViraTo JUpITeR esTaGnADO ANIl DeleterIo paraMEtrO AmARelO PARaLISIa SATURNo pEnDEnTe ESpiNHoSo BarbeadoR InFImO AmAreLO alaRME ONISCIENTE beNcaOs mOdErNiSTA NEtunO ImpRESsOrA AnaFilaTIcO VeRMelHo grandIOsidAde MaquiAR pIQUetE toDAVIA prOibicAO EStAfilOCocO eNDIvIdAdo diMENSiOnAliDADe VEnuS tEIsTA vErde avIdEZ PLEnitUde facilIMo cAStanHOlAs
+</code></pre>
+<p><a href="dados/arq12.res">Saída</a></p>
+<pre><code>L - 60
+SO - 45
+O - 45
+S - 45
+S - 45
+SO - 45
+NO - 60
+NE - 30
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab12.py</code>.</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos em Python irá considerar o comando:<br>
+<code>python3 lab12.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<h2>
+<a id="user-content-dicas" class="anchor" href="#dicas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dicas</h2>
+<p>Pesquise funções de manipulação de string.</p>
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+<p>Independentemente dos resultados dos testes do SuSy, o não cumprimento dos critérios abaixo implicará em nota zero nesta tarefa de laboratório.</p>
+
+    </article>
+</body>
+</html>

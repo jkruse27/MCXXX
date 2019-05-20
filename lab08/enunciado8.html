@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 08</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 08 - Street Fighter Avançado</h1><p>Prazo de entrega: <strong>19/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>O jogo <a href="https://en.wikipedia.org/wiki/Street_Fighter_(video_game)" rel="nofollow">Street Fighter</a> foi um dos primeiros jogos eletrônicos do gênero conhecido como jogos de luta. Neste jogo, um mestre de artes marciais, chamado Ryu, enfrenta outros lutadores em um torneio internacional de artes marciais. Cada combate entre Ryu e um oponente se dá em dois rounds. O objetivo é atacar o oponente com diferentes golpes, sendo que cada golpe aplicado subtrai uma certa quantidade de pontos de vida do outro combatente. Perde o round aquele jogador cujos pontos de vida ficar menor ou igual a zero primeiro. Vence a luta quem ganhar o maior número de rounds.</p>
+<p><a href="Street_Fighter.png" target="_blank" rel="noopener noreferrer"><img src="Street_Fighter.png" alt="Street Fighter" style="max-width:100%;"></a></p>
+<p>Assim como no laboratório anterior, a entrada consiste de uma sequência de inteiros, um em cada linha, representando os valores dos golpes aplicados (valores positivos) e recebidos (valores negativos) por Ryu. Neste laboratório, o número de pontos de vida inicial de cada lutador é de 2000. Cada round acaba quando os pontos de vida de um dos lutadores ficar menor ou igual a 0.</p>
+<p>Nesta versão da simulação de um combate, levaremos em consideração os golpes de combos de ataques. Estes golpes são mais poderosos e causam maiores danos no adversário.</p>
+<p>Nesta simulação do jogo, os combos serão determinados pela propriedade númerica do valor de um golpe (caso o valor seja negativo, ou seja, é o valor de um golpe de Ken, deve-se considerar o módulo do seu valor).</p>
+<ul>
+<li>Se o valor de um golpe for um número <strong>perfeito</strong>, este terá seu valor multiplicado por 3;</li>
+<li>Se o valor de um golpe for um número <strong>triangular</strong> mas não <strong>perfeito</strong>, este terá seu valor multiplicado por 2;</li>
+</ul>
+<p>Observação: Se o valor de um golpe for <strong>perfeito</strong> e <strong>triangular</strong>, este terá o seu valor multiplicado por 3.</p>
+<p>Um número n ∈ ℤ⁺ é dito <strong>perfeito</strong> se a soma de seus divisores próprios é igual ao próprio número. Por exemplo, 6 é um número perfeito, pois seus divisores próprios são 1, 2 e 3 e 1 + 2 + 3 = 6.</p>
+<p>Um número n ∈ ℤ⁺ é dito <strong>triangular</strong> se é igual à soma de todos os números inteiros de 1 até m, onde m é um número
+pertencente a ℤ⁺ tal que m ≤ n.
+Por exemplo, 6 = 1 + 2 + 3 e 10 = 1 + 2 + 3 + 4 são números triangulares.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O objetivo deste laboratório é simular uma luta entre Ryu e Ken e determinar
+quem ganhou a luta, considerando os multiplicadores de danos.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste em uma sequência de inteiros, um em cada linha, representando os valores dos golpes aplicados (<strong>valores positivos</strong>) e recebidos (<strong>valores negativos</strong>) por Ryu. Um round termina quando os pontos de vida de um dos lutadores é menor ou igual a 0.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Para cada sequência de golpes de um mesmo lutador, o programa deve imprimir uma nova linha com a mensagem <code>l: pv - soma = pv<sub>novo</sub></code>, onde <code>l</code> indica o lutador que recebeu a sequência de golpes, <code>pv</code> são os pontos de vida atuais do lutador <code>l</code>, <code>soma</code> representa a soma dos golpes da sequência, e <code>pv<sub>novo</sub></code> é a quantidade de pontos de vida atualizado. Observe que uma sequência de golpes termina assim que os pontos de vida de um dos lutadores chegar a 0.</p>
+<p>Por fim, o programa deve imprimir uma linha contendo somente <code>Ryu venceu</code>, <code>Ken venceu</code> ou <code>empatou</code> de acordo com o resultado geral da luta.</p>
+<h2>
+<a id="user-content-exemplo-comentado" class="anchor" href="#exemplo-comentado" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplo Comentado</h2>
+<p>Suponha que a sequência de entrada seja composta pelos números:</p>
+<pre><code>468, -269, 780, 100, -496, 500, -600,
+</code></pre>
+<p>Os pontos de vida de Ryu e Ken seriam deduzidos da seguinte forma:</p>
+<pre><code>Ken: 2000 - 468 = 1532
+Ryu: 2000 - 269 = 1731
+Ken: 1532 - 780*2 = -28
+</code></pre>
+<p>Como 780 é um número triangular, a penalidade nos pontos de vida de Ken é duplicada e Ryu vence o primeiro round. Observe que no meio da sequência positiva <code>780, 100</code>, os pontos de vida de Ken chegam a 0. Como o round termina assim que os pontos chegam a 0, o elemento <code>100</code> deve ser tratado como o início de uma nova sequência de golpes para o segundo round. Os pontos de vida dos dois jogadores voltam para 2000 e inicia-se o segundo round:</p>
+<pre><code>Ken: 2000 - 100 = 1900
+Ryu: 2000 - 496*3 = 512 -- Como 496 é um número perfeito, a penalidade é triplicada
+Ken: 1900 - 500 = 1400
+Ryu: 512 - 600 = -88
+</code></pre>
+<p>Como os pontos de vida de Ryu ficaram negativos, Ken venceu o segundo round, fazendo com que o resultado do combate seja <code>empatou</code>.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>62
+342
+-156
+-372
+387
+-325
+190
+242
+-277
+-496
+-400
+2
+-152
+260
+-192
+369
+-418
+-429
+-346
+217
+11
+112
+-442
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>Ken: 2000 - 404 = 1596
+Ryu: 2000 - 528 = 1472
+Ken: 1596 - 387 = 1209
+Ryu: 1472 - 650 = 822
+Ken: 1209 - 622 = 587
+Ryu: 822 - 1765 = -943
+Ryu: 2000 - 400 = 1600
+Ken: 2000 - 2 = 1998
+Ryu: 1600 - 152 = 1448
+Ken: 1998 - 260 = 1738
+Ryu: 1448 - 192 = 1256
+Ken: 1738 - 369 = 1369
+Ryu: 1256 - 1193 = 63
+Ken: 1369 - 340 = 1029
+Ryu: 63 - 442 = -379
+Ken venceu
+</code></pre>
+<h3>
+<a id="user-content-teste-05" class="anchor" href="#teste-05" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 05</h3>
+<p><a href="dados/arq05.in">Entrada</a></p>
+<pre><code>-233
+114
+-342
+81
+296
+401
+-82
+12
+127
+335
+-16
+-263
+453
+-94
+235
+358
+21
+-71
+411
+-396
+-279
+-184
+470
+-10
+-285
+296
+-269
+266
+-80
+248
+</code></pre>
+<p><a href="dados/arq05.res">Saída</a></p>
+<pre><code>Ryu: 2000 - 233 = 1767
+Ken: 2000 - 114 = 1886
+Ryu: 1767 - 342 = 1425
+Ken: 1886 - 778 = 1108
+Ryu: 1425 - 82 = 1343
+Ken: 1108 - 474 = 634
+Ryu: 1343 - 279 = 1064
+Ken: 634 - 453 = 181
+Ryu: 1064 - 94 = 970
+Ken: 181 - 235 = -54
+Ken: 2000 - 400 = 1600
+Ryu: 2000 - 71 = 1929
+Ken: 1600 - 411 = 1189
+Ryu: 1929 - 859 = 1070
+Ken: 1189 - 470 = 719
+Ryu: 1070 - 305 = 765
+Ken: 719 - 296 = 423
+Ryu: 765 - 269 = 496
+Ken: 423 - 266 = 157
+Ryu: 496 - 80 = 416
+Ken: 157 - 248 = -91
+Ryu venceu
+</code></pre>
+<h3>
+<a id="user-content-teste-10" class="anchor" href="#teste-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 10</h3>
+<p><a href="dados/arq10.in">Entrada</a></p>
+<pre><code>312
+134
+-453
+-173
+-159
+83
+-460
+430
+-25
+-281
+-133
+-477
+-443
+492
+289
+114
+31
+7
+-92
+484
+53
+151
+-257
+-235
+346
+485
+</code></pre>
+<p><a href="dados/arq10.res">Saída</a></p>
+<pre><code>Ken: 2000 - 446 = 1554
+Ryu: 2000 - 785 = 1215
+Ken: 1554 - 83 = 1471
+Ryu: 1215 - 460 = 755
+Ken: 1471 - 430 = 1041
+Ryu: 755 - 916 = -161
+Ryu: 2000 - 443 = 1557
+Ken: 2000 - 933 = 1067
+Ryu: 1557 - 92 = 1465
+Ken: 1067 - 688 = 379
+Ryu: 1465 - 492 = 973
+Ken: 379 - 831 = -452
+empatou
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>.</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab08.py</code>.</li><li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)<br>
+<code>python3 lab08.py</code>.</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA.</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

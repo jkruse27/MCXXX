@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 10</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc999---introdução-à-computação" class="anchor" href="#mc999---introdu%C3%A7%C3%A3o-%C3%A0-computa%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC999 - Introdução à Computação</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 10 - PokéaMãe</h1><p>Prazo de entrega: <strong>26/04/2019 23:59:59</strong></p><p>Peso: 1</p>
+<p><em>Professor:</em> Luiz Fernando Bittencourt
+<em>Professor:</em> Eduardo Xavier</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>No famoso jogo para celulares chamado PokéaMãe, um jogador possui
+um conjunto de monstros de diferentes espécies, e seu objetivo é colecionar a maior quantidade possível de monstros. Para obter novos monstros, um jogador pode comprar um monstro, ou obter um através de um combate entre um monstro seu e o monstro de um outro jogador. O jogador que vencer um combate passa a ser o novo dono do monstro adversário. Cada monstro possui um poder de combate, denotado por <strong>PC</strong>, e quanto maior este valor maior é a chance do monstro vencer um combate.</p>
+<p>Os monstros são divididos em espécies.
+Cada espécie de monstro possui um número inteiro como identificador único da espécie.</p>
+<p>Monstros podem ser treinados, e com isto evoluem, passando a ter o seu <strong>PC</strong> aumentado.
+O quanto o <strong>PC</strong> aumenta após um treinamento, depende da espécie do monstro e do seu poder de combate atual <strong>PCa</strong>.</p>
+<p>Você quer ser o melhor treinador de monstros no jogo PokéaMãe.
+Na sua missão pessoal, você deve estimar qual será o poder de combate futuro <strong>PCf</strong> de cada um de seus monstros quando estes evoluirem.</p>
+<p>Você montou uma base de dados com os resultados de evoluções já experimentadas no passado.
+Nesta base de dados, para cada monstro, você tem armazenado o identificador da espécie do monstro,  o poder de combate antes da evolução, denotado por <strong>PCa</strong>, e o poder de combate futuro obtido após a evolução, denotado por <strong>PCf</strong>. Com base nestes dados, é possível computar para cada monstro o <em>fator multiplicador</em> obtido na evolução, que é definido como o resultado de</p>
+<p><a href="form1.png" target="_blank" rel="noopener noreferrer"><img src="form1.png" width="200" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-exemplo" class="anchor" href="#exemplo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplo</h2>
+<p>Suponha que você conseguiu observar a evolução de 10 monstros de 3 espécies distintas, com identificadores 25, 56 e 98. Os valores do multiplicador para cada observação estão apresentados abaixo:</p>
+<table>
+<thead>
+<tr>
+<th align="left">
+<strong>I</strong>dentificador da espécie</th>
+<th align="left">Espécie</th>
+<th align="left"><strong>PCa</strong></th>
+<th align="left"><strong>PCf</strong></th>
+<th align="left">Multiplicador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">25</td>
+<td align="left"><a href="MB25.png" target="_blank" rel="noopener noreferrer"><img src="MB25.png" alt="MB25" style="max-width:100%;"></a></td>
+<td align="left">16</td>
+<td align="left">38</td>
+<td align="left">2.3750</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left"><a href="MB98.png" target="_blank" rel="noopener noreferrer"><img src="MB98.png" alt="MB98" style="max-width:100%;"></a></td>
+<td align="left">674</td>
+<td align="left">1584</td>
+<td align="left">2.3501</td>
+</tr>
+<tr>
+<td align="left">56</td>
+<td align="left"><a href="MB56.png" target="_blank" rel="noopener noreferrer"><img src="MB56.png" alt="MB56" style="max-width:100%;"></a></td>
+<td align="left">134</td>
+<td align="left">288</td>
+<td align="left">2.1493</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left"><a href="MB98.png" target="_blank" rel="noopener noreferrer"><img src="MB98.png" alt="MB98" style="max-width:100%;"></a></td>
+<td align="left">523</td>
+<td align="left">1229</td>
+<td align="left">2.3499</td>
+</tr>
+<tr>
+<td align="left">56</td>
+<td align="left"><a href="MB56.png" target="_blank" rel="noopener noreferrer"><img src="MB56.png" alt="MB56" style="max-width:100%;"></a></td>
+<td align="left">100</td>
+<td align="left">215</td>
+<td align="left">2.1500</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left"><a href="MB98.png" target="_blank" rel="noopener noreferrer"><img src="MB98.png" alt="MB98" style="max-width:100%;"></a></td>
+<td align="left">340</td>
+<td align="left">799</td>
+<td align="left">2.3500</td>
+</tr>
+<tr>
+<td align="left">56</td>
+<td align="left"><a href="MB56.png" target="_blank" rel="noopener noreferrer"><img src="MB56.png" alt="MB56" style="max-width:100%;"></a></td>
+<td align="left">45</td>
+<td align="left">97</td>
+<td align="left">2.1556</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left"><a href="MB25.png" target="_blank" rel="noopener noreferrer"><img src="MB25.png" alt="MB25" style="max-width:100%;"></a></td>
+<td align="left">100</td>
+<td align="left">238</td>
+<td align="left">2.3800</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left"><a href="MB25.png" target="_blank" rel="noopener noreferrer"><img src="MB25.png" alt="MB25" style="max-width:100%;"></a></td>
+<td align="left">658</td>
+<td align="left">1566</td>
+<td align="left">2.3799</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left"><a href="MB98.png" target="_blank" rel="noopener noreferrer"><img src="MB98.png" alt="MB98" style="max-width:100%;"></a></td>
+<td align="left">100</td>
+<td align="left">235</td>
+<td align="left">2.3500</td>
+</tr>
+</tbody>
+</table>
+<p>Com base nestes dados podemos computar para cada espécie o valor médio do multiplicador
+obtido nas evoluções. Estes valores estão apresentados abaixo:</p>
+<table>
+<thead>
+<tr>
+<th align="left">
+<strong>I</strong>dentificador da espécie</th>
+<th align="left">Espécie</th>
+<th align="left">Multiplicador Médio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">25</td>
+<td align="left"><a href="MB25.png" target="_blank" rel="noopener noreferrer"><img src="MB25.png" alt="MB25" style="max-width:100%;"></a></td>
+<td align="left">2.3783</td>
+</tr>
+<tr>
+<td align="left">56</td>
+<td align="left"><a href="MB56.png" target="_blank" rel="noopener noreferrer"><img src="MB56.png" alt="MB56" style="max-width:100%;"></a></td>
+<td align="left">2.1516</td>
+</tr>
+<tr>
+<td align="left">98</td>
+<td align="left"><a href="MB98.png" target="_blank" rel="noopener noreferrer"><img src="MB98.png" alt="MB98" style="max-width:100%;"></a></td>
+<td align="left">2.3500</td>
+</tr>
+</tbody>
+</table>
+<p>Com base nesta última tabela, se você for evoluir um monstro da espécie 98 com <strong>PCa</strong> igual a 76, você deve esperar após a evolução um <strong>PCf</strong> de 179. Este resultado é obtido calculando-se</p>
+<p><a href="form2.png" target="_blank" rel="noopener noreferrer"><img src="form2.png" width="160" style="max-width:100%;"></a></p>
+<p>ou seja, é o teto do resultado da multiplicação do poder de combate atual
+<strong>PCa</strong> pelo multiplicador médio da espécie do monstro, denotado por <strong>M</strong>.</p>
+<p>Você deverá criar um programa que primeiramente carrega uma base de dados, e em seguida responde à consultas sobre esta base. Cada consulta indica uma espécie de monstro e o <strong>PCa</strong> do monstro. O programa deverá dar como resposta o poder de combate futuro esperado <strong>PCf</strong> com base nas evoluções armazenadas na base de dados.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>Suponha que o identificador de cada espécie seja um número inteiro positivo até 1.000.000.000 (Um bilhão). Mas o número máximo de espécies distintas na entrada será 151.</p>
+<p>A entrada do programa será composta primeiramente de um inteiro <strong>N</strong> indicando
+o número de evoluções de monstros presentes na base de dados.
+Cada uma das <strong>N</strong> linhas seguintes possui o identificador <strong>I</strong> da espécie do monstro (valor entre 1 e Um bilhão), um inteiro representando o poder antes da evolução (<strong>PCa</strong>) e por fim um outro inteiro representando o poder depois da evolução (<strong>PCf</strong>). Você pode assumir que o valor máximo para <strong>N</strong> também é 151.</p>
+<p>Em seguida, serão feitas consultas à base de dados carregada.
+Cada linha de consulta é composta pelo identificador <strong>I</strong> da espécie do monstro e o poder atual <strong>PCa</strong>.
+A execução termina quando o identificador <strong>I</strong> e o <strong>PCa</strong> forem iguais a <code>0</code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Para cada consulta deverá ser impresso o poder estimado futuro <strong>PCf</strong> da evolução.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>10
+25 16 38
+98 674 1584
+56 134 288
+98 523 1229
+56 100 215
+98 340 799
+56 45 97
+25 100 238
+25 658 1566
+98 100 235
+25 100
+56 100
+98 100
+25 33
+56 71
+98 127
+0 0
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>238
+216
+236
+79
+153
+299
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>10
+25 74 181
+25 848 2086
+21 645 1563
+25 90 218
+21 637 1605
+30 808 1497
+21 746 1915
+21 454 1066
+30 823 1507
+21 740 1922
+21 435
+21 539
+21 166
+25 73
+30 213
+0 0
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>1084
+1343
+414
+179
+393
+</code></pre>
+<p>Para mais exemplos, consulte os <a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab10.py</code>;</li><li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)
+<code>python3 lab10.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+<li>Você poderá usar a função <code>math.ceil</code> em Python.</li>
+</ul>
+<h2>
+<a id="user-content-dicas" class="anchor" href="#dicas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dicas</h2>
+<ul>
+<li>
+<p>Use o seguinte exemplo para ler uma linha com 3 inteiros em Python:</p>
+<pre><code>linha = input()
+ints = [int(i) for i in linha.split()]
+</code></pre>
+</li>
+</ul>
+<p>Seus valores estarão em <code>ints[0]</code>, <code>ints[1]</code> e <code>ints[2]</code>.</p>
+<ul>
+<li>Use quatro listas: uma para armazenar os identificadores dos monstros, uma para o PCa, uma para o PCf e uma última para o fator multiplicador da evolução.</li>
+</ul>
+
+    </article>
+</body>
+</html>

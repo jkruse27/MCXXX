@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 13</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 13 - Walking Dead</h1><p>Prazo de entrega: <strong>17/05/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Luiz Fernando Bittencourt
+<em>Professor:</em> Eduardo Xavier</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p><a href="zumbis.jpeg" target="_blank" rel="noopener noreferrer"><img src="zumbis.jpeg" width="400" style="max-width:100%;"></a></p>
+<p>O apocalipse está sobre nós, e ele chegou na forma de um ataque de zumbis! Em preparação para o apocalipse zumbi, um grupo de cientistas estudou padrões de propagação e interação entre humanos e zumbis. Em um modelo simplificado, podemos representar os indivíduos do planeta em uma grade (matriz), e prever o destino de um individuo <code>X</code> após um dia baseando-se na sua vizinhança atual (veja figura abaixo).</p>
+<p><a href="img1.png" target="_blank" rel="noopener noreferrer"><img src="img1.png" width="100" style="max-width:100%;"></a></p>
+<p>Um indivíduo <code>X</code> que esteja numa posição <code>(i,j)</code> desta matriz, tem como vizinhos àqueles nas
+posições <code>(i-1,j-1)</code>, <code>(i-1,j)</code>, <code>(i-1,j+1)</code>, <code>(i,j-1)</code>, <code>(i,j+1)</code>, <code>(i+1,j-1)</code>, <code>(i+1,j)</code>, <code>(i+1,j+1)</code>
+que correspondem respectivamente aos vizinhos <code>v1</code>, <code>v2</code>, <code>v3</code>, <code>v4</code>, <code>v5</code>, <code>v6</code>, <code>v7</code>, e <code>v8</code> da figura.</p>
+<p>Os cientistas concluíram que as seguintes interações modelam a relação humano/zumbi:</p>
+<ul>
+<li>Se <code>X</code> for humano e possuir pelo menos um vizinho zumbi, então <code>X</code> é infectado e se torna um zumbi no dia seguinte;</li>
+<li>Se <code>X</code> for zumbi e possuir dois ou mais vizinhos humanos, ele é caçado e morto pelos humanos;</li>
+<li>Se <code>X</code> for zumbi e não possuir nenhum vizinho humano, ele morre de fome e fica vazio no dia seguinte;</li>
+<li>Se <code>X</code> estiver vazio e possuir <strong>exatamente</strong> dois vizinhos humanos, independente dos demais vizinhos serem zumbis ou vazio, então um humano nasce em <code>X</code> no dia seguinte.</li>
+<li>Se nenhuma das alternativas anteriores for verdade, então <code>X</code> permanece como está.</li>
+</ul>
+<p>O estado da população em um determinado dia é baseado apenas nas informações de vizinhança do <strong>estado da população no dia anterior</strong>.</p>
+<p>Veja os exemplos abaixo. Nestes exemplos <code>H</code> identifica um humano e <code>Z</code> um zumbi. Estes exemplos analisam apenas as mudanças em <code>X</code> de um dia para o outro. Como dito anteriormente, é preciso analisar individualmente cada posição da matriz para modificar o seu estado para o próximo estado da população.</p>
+<p><strong>Exemplo 1:</strong> Suponha que no estado atual, <code>X</code> é humano, e possui ao menos um vizinho zumbi. Portanto <code>X</code> será um zumbi no próximo dia.</p>
+<p><a href="img2.png" target="_blank" rel="noopener noreferrer"><img src="img2.png" width="250" style="max-width:100%;"></a></p>
+<p><strong>Exemplo 2:</strong> Suponha que no estado atual, <code>X</code> é um zumbi, e possui ao menos dois vizinhos humanos. No estado seguinte <code>X</code> será o vazio pois será morto.</p>
+<p><a href="img3.png" target="_blank" rel="noopener noreferrer"><img src="img3.png" width="250" style="max-width:100%;"></a></p>
+<p><strong>Exemplo 3:</strong>  Suponha que no estado atual, <code>X</code> está vazio. Como não possui exatamente dois vizinhos humanos, nada acontece.</p>
+<p><a href="img4.png" target="_blank" rel="noopener noreferrer"><img src="img4.png" width="250" style="max-width:100%;"></a></p>
+<p><strong>Exemplo 4:</strong>  Suponha que no estado atual, <code>X</code> está vazio, e possui exatamente dois vizinhos humanos. No dia seguinte nasce um humano em <code>X</code>.</p>
+<p><a href="img5.png" target="_blank" rel="noopener noreferrer"><img src="img5.png" width="250" style="max-width:100%;"></a></p>
+<p>Você deve ajudar os cientistas a preverem qual será o estado do planeta após a passagem de alguns dias. Para isso você deve criar um programa de simulação de interações humano/zumbi. O seu programa deverá ter um estado inicial do planeta carregado na forma de uma matriz, e então deverá atualizar o estado do planeta para cada dia transcorrido, onde um novo estado de um determinado dia, consiste em atualizar os valores de cada posição <code>(i,j)</code> considerando o estado do planeta no dia anterior.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O objetivo deste laboratório é, dada a configuração inicial da população, simular o estado da população durante alguns dias utilizando as regras de interação humano/zumbi definidas acima.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A primeira linha da entrada é composta por dois inteiros, <code>m</code> e <code>n</code>, representando respectivamente o número de linhas e colunas da matriz.
+A segunda linha contém um inteiro <code>i</code>, representando o número de dias que desejamos simular o estado da população. À seguir temos cada uma das <code>m</code> linhas da matriz. Cada linha é composta por <code>n</code> inteiros, onde 0 representa o vazio, 1 um humano e 2  um zumbi.</p>
+<p><strong>Note que elementos na primeira ou última linha, assim como elementos na primeira ou última coluna, não possuem todos os vizinhos.</strong> <em>Dica:</em> Para simplificar o processo de verificação deste casos, você pode utilizar uma matriz extendida com duas linhas e colunas adicionais, ambas preenchidas com zeros.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída deverá reportar o estado da população para cada um dos <code>i</code> dias transcorridos. Para cada estado à ser impresso, você deve primeiro imprimir <code>iteracao x</code>, substituindo <code>x</code> pelo número do dia, seguido pela impressão da matriz. Você deve imprimir inicialmente como <code>iteracao 0</code>, o estado inicial da população.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>18 26
+6
+0 2 2 2 1 1 1 1 0 0 0 1 2 2 1 2 0 1 1 1 1 1 0 1 0 1
+1 1 1 2 1 2 0 1 1 1 0 0 1 2 0 1 2 1 2 0 0 1 1 1 2 2
+1 1 0 1 2 0 2 2 2 0 2 2 2 1 0 0 1 0 0 1 0 0 2 1 2 0
+0 2 0 2 1 2 1 1 2 2 2 0 0 0 2 1 0 2 2 2 2 0 0 1 1 1
+0 2 0 2 1 1 1 0 0 2 2 2 2 0 2 2 2 0 2 0 2 0 0 1 2 0
+1 0 1 1 1 2 1 0 2 2 0 1 0 2 2 2 1 0 2 1 0 0 1 2 2 0
+0 1 1 2 2 2 0 2 2 2 1 2 2 0 2 2 0 1 2 2 1 0 2 2 2 2
+2 1 0 0 2 0 2 1 0 2 1 2 1 1 1 2 0 2 2 0 0 0 2 2 2 0
+0 0 2 1 1 2 1 2 1 0 2 2 1 1 0 2 2 0 2 1 0 1 2 2 1 2
+1 2 1 1 0 1 2 1 0 0 2 0 1 0 2 1 2 0 2 0 1 0 0 1 0 0
+0 0 1 1 0 1 0 1 1 0 2 1 0 0 2 2 1 2 1 2 1 2 1 1 2 0
+1 0 2 2 1 0 1 0 0 1 1 1 1 2 2 2 2 1 0 2 1 2 0 1 2 0
+0 2 0 0 0 2 2 1 2 2 1 0 2 0 0 0 1 1 2 0 1 2 2 0 0 0
+0 1 0 1 2 1 1 2 1 0 0 2 0 0 1 2 0 0 1 2 1 0 1 0 2 2
+2 2 0 2 1 0 0 2 1 2 1 0 2 0 1 1 2 0 0 2 2 0 0 1 0 2
+2 1 1 2 1 2 1 0 2 0 0 2 1 1 2 0 1 1 2 0 1 2 0 1 0 1
+1 0 0 1 2 2 1 1 0 0 0 1 2 0 1 2 2 2 0 0 0 2 1 1 2 1
+1 2 2 0 2 1 0 0 2 2 0 2 2 2 1 1 2 2 2 0 1 0 1 1 1 2
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>iteracao 0
+02221111000122120111110101
+11121201110012012120011122
+11012022202221001001002120
+02021211222000210222200111
+02021110022220222020200120
+10111210220102221021001220
+01122202221220220122102222
+21002021021211120220002220
+00211212102211022021012212
+12110121002010212020100100
+00110101102100221212121120
+10221010011112222102120120
+02000221221020001120122000
+01012112100200120012101022
+22021002121020112002200102
+21121210200211201120120101
+10012211000120122200021121
+12202100220222112220101112
+iteracao 1
+10002221011200200222110202
+22202002221120020200022202
+22020000012202002112110201
+10102022200000021222200222
+00102220002220200020200201
+20222021021200022102112020
+02200010202000001200212200
+02000102102022220201012220
+10022020212022002022020022
+20220202012020020100200200
+10220202100201202020202200
+21002020022222000200200200
+10110002002001012200200100
+02120220201001200020202120
+00002000202100220010000202
+02202020011022002220200202
+20020022000200200001102202
+20200201200220222000202220
+iteracao 2
+20000022122000000002220000
+22000002002220000010000002
+20020000020000000220220002
+20210000200000022000010000
+00210020002200001120010002
+00220002022200020202220020
+00000120012000002011020000
+02000210212000020202020000
+20002020020000002002120000
+01000002020020000200000000
+21200002210002202020000000
+02012000020000000000000200
+20220000002012022000001210
+00200000002102000020000200
+00000000200210200020000200
+00000000022120000200000000
+00000022111200000002200000
+00000002200000000001000000
+iteracao 3
+00000002220000000002000000
+00000002000000000020000000
+00020000000000000220220000
+00021000000000020100121000
+00021000000000002220121000
+00221000022000021000020000
+00000200120000000022000000
+00000020020000000210120000
+20000020020000000002220000
+12100000020000000000000000
+02000000220000000000000000
+02122000020000000000000000
+00220000002122000000002020
+00000000002200000000000000
+00000000001020000000000000
+00000000100200000000000000
+00000002222000000002200000
+00000002001000000002000000
+iteracao 4
+00000000000000000000000000
+00000000000000000000000000
+00020000000000000220200000
+00002100000000000201202100
+00002000000000000021202100
+00002100020000022000000000
+00000200220000000120000000
+00000000020000000221220000
+21000000000000000000220000
+20200000000000000000000000
+00110000000000000000000000
+02220000000000000000000000
+00220000002220000000000000
+00000000000000000000000000
+00000000012000000000000000
+00000000210200000000000000
+00000002202000000000000000
+00000000002000000000000000
+iteracao 5
+00000000000000000000000000
+00000000000000000000000000
+00000000000000000020200000
+00002200000000000012000210
+00000110000000000002000210
+00002200000000002010000000
+00000200000000000200000000
+00000000000000000202200000
+22000000000000000000200000
+21010000000000000000000000
+00220000000000000000000000
+02000000000000000000000000
+00000000000000000000000000
+00000000000000000000000000
+00000000120000000000000000
+00000000021000000000000000
+00000000202000000000000000
+00000000000000000000000000
+iteracao 6
+00000000000000000000000000
+00000000000000000000000000
+00000000000000000020000000
+00002010000000000022000021
+00000220000000000110000021
+00002010000000000020000000
+00000000000000000200000000
+00000000000000000000000000
+22100000000000000000000000
+22120000000000000000000000
+00020000000000000000000000
+00000000000000000000000000
+00000000000000000000000000
+00000000000000000000000000
+00000000200000000000000000
+00000000002000000000000000
+00000000002000000000000000
+00000000000000000000000000
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>.</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab13.py</code>.</li><li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)
+<code>python3 lab13.py</code>.</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA.</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

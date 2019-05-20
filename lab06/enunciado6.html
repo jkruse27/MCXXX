@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 06</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 06 - Estacionamento</h1><p>Prazo de entrega: <strong>11/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>O objetivo desta atividade é criar um programa que auxilie
+no gerenciamento de um estacionamento que possui uma determinada capacidade.</p>
+<p>Há duas cancelas no estacionamento, uma de entrada e uma de saída,  e em
+cada cancela há um sensor que mede o tamanho dos veículos
+que passam por ela.</p>
+<p>Você deverá fazer um programa que gerencie um estacionamento mantendo o
+controle da capacidade disponível, e caso o estacionamento não comporte
+um determinado veículo que esteja tentando entrar, a cancela deve
+impedir a entrada do mesmo.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>O programa deverá ler primeiramente um inteiro positivo C
+que representa a capacidade do estacionamento.</p>
+<p>Em seguida o programa deverá ler uma sequência de números inteiros não
+nulos, com valores entre -5 e 5, seguida do valor 0, indicando o fim da sequência.</p>
+<p>Cada um dos valores não nulos entre -5 e 5 indica se um veículo esta entrando
+(valores positivos) ou saindo (valores negativos) e o módulo do valor
+indica o tamanho do veículo, ou seja,
+quanto da capacidade total C o veículo utilizará caso esteja entrando,
+e quanto liberará caso esteja saindo.</p>
+<p>Considere que o estacionamento sempre começa vazio e que todos os valores
+fornecidos estão corretos, ou seja, somente carros que entraram no estacionamento irão sair dele.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Para cada veículo que estiver entrando deverá ser impressa a mensagem
+"Seja bem-vindo! Capacidade restante: CAPACIDADE", na qual a palavra
+CAPACIDADE deverá ser trocada pelo inteiro que indica a capacidade
+restante do estacionamento, já descontado o tamanho do veículo
+que está entrando.</p>
+<p>Se na entrada de um veículo, a capacidade restante do estacionamento
+for menor do que o tamanho do veículo, ao invés de imprimir a mensagem
+acima deverá ser impressa a mensagem "Veiculo muito grande! Capacidade restante: CAPACIDADE",
+na qual a palavra CAPACIDADE deverá ser trocada pelo inteiro que indica a
+capacidade restante sem o veículo.</p>
+<p>Se a operação for a saída de um veículo, deverá ser impressa
+a mensagem "Volte sempre! Capacidade restante: CAPACIDADE", na qual a palavra
+CAPACIDADE deverá ser trocada pelo inteiro que indica a capacidade
+restante do estacionamento
+já somada com o tamanho do veículo que está saindo.</p>
+<p>Se o fim da sequência for indicado, nenhuma mensagem deverá ser
+impressa na saída.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>10
+5
+-5
+0
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>Seja bem-vindo! Capacidade restante: 5
+Volte sempre! Capacidade restante: 10
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>10
+4
+4
+4
+4
+-4
+3
+0
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>Seja bem-vindo! Capacidade restante: 6
+Seja bem-vindo! Capacidade restante: 2
+Veiculo muito grande! Capacidade restante: 2
+Veiculo muito grande! Capacidade restante: 2
+Volte sempre! Capacidade restante: 6
+Seja bem-vindo! Capacidade restante: 3
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>20
+2
+3
+4
+5
+-5
+-4
+-3
+-2
+0
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>Seja bem-vindo! Capacidade restante: 18
+Seja bem-vindo! Capacidade restante: 15
+Seja bem-vindo! Capacidade restante: 11
+Seja bem-vindo! Capacidade restante: 6
+Volte sempre! Capacidade restante: 11
+Volte sempre! Capacidade restante: 15
+Volte sempre! Capacidade restante: 18
+Volte sempre! Capacidade restante: 20
+</code></pre>
+<p>Para mais exemplos, consulte os <a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>12</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab06.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação se dará da seguinte forma:<br>
+<code>python3 lab06.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+<p>Independentemente dos resultados dos testes do SuSy, o não cumprimento dos critérios abaixo implicará em nota zero nesta tarefa de laboratório.</p>
+
+    </article>
+</body>
+</html>

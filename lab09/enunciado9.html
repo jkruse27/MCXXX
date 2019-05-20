@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 09</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação-da-unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o-da-unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação da UNICAMP</h3>
+<h3>
+<a id="user-content-disciplina-mc102-algoritmos-e-programação-de-computadores---turmas-qrst" class="anchor" href="#disciplina-mc102-algoritmos-e-programa%C3%A7%C3%A3o-de-computadores---turmas-qrst" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Disciplina MC102: Algoritmos e Programação de Computadores - Turmas QRST</h3>
+<h3>
+<a id="user-content-laboratório-nº-09" class="anchor" href="#laborat%C3%B3rio-n%C2%BA-09" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório Nº 09</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 09 - Divisores</h1><p>Prazo de entrega: <strong>26/04/2019 23:59:59</strong></p><p>Peso: 1</p>
+<p><em>Professor:</em> Luiz Fernando Bittencourt
+<em>Professor:</em> Eduardo Xavier</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>Dizemos que <em>x</em> é <strong>divisor</strong> de <em>y</em> quando existe um número inteiro <em>k</em> tal que <em>y</em> seja igual a <em>x</em> vezes <em>k</em>. Por exemplo, 6 é divisor de 24, pois 6 vezes 4 resulta em 24.</p>
+<p>Uma forma interessante de se notar como divisores podem formar padrões é olhar para vários números simultaneamente. Uma forma de se vizualizar esses padrões é construindo uma matriz de divisores onde cada posição na matriz indica se a linha e coluna são divisores um do outro.</p>
+<p>Por exemplo, podemos listar para todos os números entre 1 a 8, quais são divisores entre si construindo a matriz abaixo em ordem do canto superior esquerdo para o canto inferior direito:</p>
+<table border="0" hspace="30">
+<tbody>
+<tr>
+<td><tt>********</tt></td>
+</tr>
+<tr>
+<td><tt>**-*-*-*</tt></td>
+</tr>
+<tr>
+<td><tt>*-*--*--</tt></td>
+</tr>
+<tr>
+<td><tt>**-*---*</tt></td>
+</tr>
+<tr>
+<td><tt>*---*---</tt></td>
+</tr>
+<tr>
+<td><tt>***--*--</tt></td>
+</tr>
+<tr>
+<td><tt>*-----*-</tt></td>
+</tr>
+<tr>
+<td><tt>**-*---*</tt></td>
+</tr>
+</tbody>
+</table>
+<p>Onde <tt>"*"</tt> significa que naquela posição com linha i e coluna j, i é divisor de j ou j é divisor de i, e <tt>"-"</tt> caso contrário.</p>
+<p>Neste projeto, você deve escrever um programa que leia um número inteiro <tt>N</tt> (N estará entre 1 e 100) e escreva na saída uma matriz N por N onde para cada linha i e cada coluna j (i,j entre 1 e N):</p>
+<ul>
+<li>Escreva <tt>"*"</tt> caso i seja divisor de j ou j seja divisor de i;</li>
+<li>Escreva <tt>"-"</tt> caso contrário.</li>
+</ul>
+<p>Ainda, após a impressão dessa matriz, o programa deve escrever em uma nova linha o número de vezes em que <tt>"*"</tt> foi impresso.<strong>Observações Importantes</strong></p>
+<ul>
+<li>O número fornecido <tt>N</tt> é um inteiro entre 1 e 100.</li>
+<li>A ordem da matriz a ser impressa é do canto superior esquerdo para o inferior direito, ou seja, o canto superior esquerdo é a posição (1,1) , o canto superior direito é a posição (1,N), o canto inferior esquerdo é a posição (N,1) e o canto inferior direito é a posição (N,N).</li>
+<li>Você <strong>deve</strong> quebrar a linha após imprimir todo o resultado.</li>
+</ul>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>2
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>**
+**
+4
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>8
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>********
+**-*-*-*
+*-*--*--
+**-*---*
+*---*---
+***--*--
+*-----*-
+**-*---*
+32
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>5
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>*****
+**-*-
+*-*--
+**-*-
+*---*
+15
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<p><strong>Observações gerais:</strong></p>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li>
+<li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab07.py</code>;</li>
+<li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)
+<code>python3 lab07.py</code>;</li>
+<li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<hr>
+
+    </article>
+</body>
+</html>

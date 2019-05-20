@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 14</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 14 - Sistema da DAC</h1><p>Prazo de entrega: <strong>26/04/2018 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+
+<em>Monitor:</em> Alexsandro Alexandrino<br>
+<em>Monitor:</em> Ramon Nepomuceno<br></p>
+
+<hr>
+
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>O sistema de gerenciamento de turmas da DAC deve ser capaz de realizar operações como impressão, ordenação, inclusão, remoção e busca de alunos matriculados em cada turma.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>Você deve criar um programa, que dada uma lista inicial de RAs de alunos matriculados em uma turma, consiga realizar as seguintes operações:</p>
+<ul>
+<li>p - Imprimir</li>
+</ul>
+<p>A impressão deve imprimir a lista de RAs de alunos matriculados em seu estado atual, ou seja, caso a lista não tenha sido ordenada ainda, deve imprimir na mesma ordem em que foi lida na entrada. Caso a turma não tenha nenhum aluno matriculado, nada deve ser impresso.</p>
+<ul>
+<li>c - Ordenação crescente</li>
+</ul>
+<p>Deve-se ordernar os RAs dos alunos em ordem crescente. Se na entrada tivermos os valores</p>
+<p><a href="1.png" target="_blank"><img src="1.png" alt="Discurso" style="max-width:100%;"></a></p>
+<p>então a saída deve ser:</p>
+<p><a href="2.png" target="_blank"><img src="2.png" alt="Discurso" style="max-width:100%;"></a></p>
+<ul>
+<li>d - Ordenação decrescente</li>
+</ul>
+<p>Deve-se ordenar os RAs dos alunos em ordem decrescente. Para os RAs do exemplo anterior, deve ser impresso:</p>
+<p><a href="3.png" target="_blank"><img src="3.png" alt="Discurso" style="max-width:100%;"></a></p>
+<ul>
+<li>b - Busca binária</li>
+</ul>
+<p>Deve-se realizar a busca binária para um RA fornecido. A busca binária deve imprimir o índice de busca para cada passo do algoritmo e o índice final, caso o RA tenha sido encontrado ou uma mensagem de erro, caso contrário. Se a lista não estiver ordenada ao realizar a busca, uma mensagem de erro deve ser impressa. Por exemplo, para a busca  do RA 189619 na lista em ordem crescente deveria ser impresso os indices 3, 1, e 2.</p>
+<p><a href="4.png" target="_blank"><img src="4.png" alt="Discurso" style="max-width:100%;"></a></p>
+<p>A busca binária deve ser feita tanto se a lista estiver em ordem crescente quanto decrescente.</p>
+<p>OBS: Durante a busca binária em um sub-vetor que começa na posição <code>i</code> e termina em <code>f</code>, a posição do meio é dada por <code>(i+f)/2</code>.</p>
+<ul>
+<li>i - Inserir</li>
+</ul>
+<p>A inserção deve ser feita de modo que a ordenação seja mantida, ou seja, se a lista tiver sido ordenada antes da inserção, o valor inserido deve ficar na posição correta e a lista deve ser atualizada. Se a lista não tiver sido ordenada antes da inserção, o aluno é inserido ao final da lista. Caso o limite máximo de alunos seja atingido (150 alunos), uma mensagem de erro deve ser impressa ao invés de inserir o aluno na turma. Caso o aluno a ser inserido já esteja matriculado na turma, uma mensagem deve ser impressa.</p>
+<p>Por exemplo, ao inserir o RA 175498  se o vetor não estiver ordenado
+<a href="5.png" target="_blank"><img src="5.png" alt="Discurso" style="max-width:100%;"></a>
+Se estiver em ordem crescente
+<a href="6.png" target="_blank"><img src="6.png" alt="Discurso" style="max-width:100%;"></a>
+Se estiver em ordem decrescente
+<a href="7.png" target="_blank"><img src="7.png" alt="Discurso" style="max-width:100%;"></a></p>
+<ul>
+<li>r - Remover</li>
+</ul>
+<p>A remoção não pode ser realizada se não tiver alunos matriculados na disciplina, assim, uma mensagem de erro deve ser impressa. Caso o aluno não esteja matriculado na disciplina, também deve-se imprimir uma mensagem de erro.</p>
+<p>Por exemplo, ao remover o RA 189619 da lista
+<a href="1.png" target="_blank"><img src="1.png" alt="Discurso" style="max-width:100%;"></a>
+obetemos a lista
+<a href="8.png" target="_blank"><img src="8.png" alt="Discurso" style="max-width:100%;"></a></p>
+<ul>
+<li>s - Sair</li>
+</ul>
+<p>Finaliza a execução do programa.</p>
+<hr>
+<p>Os parâmetros de cada identificador são informados imediatamente depois do mesmo, sendo que os parâmetros são:</p>
+<ul>
+<li>O identificador <code>b</code> é seguido de um número que denotamos por <code>ra_busca</code>.</li>
+<li>O identificador <code>i</code> é seguido de um número que denotamos por <code>ra_insercao</code>.</li>
+<li>O identificador <code>r</code> é seguido de um número que denotamos por <code>ra_remocao</code>.</li>
+</ul>
+<p>OBSERVAÇÕES:</p>
+<ul>
+<li>O número de cada RA é um valor do tipo inteiro.</li>
+<li>O número máximo de alunos que podem ser matriculados é 150.</li>
+<li>A busca que é feita na inserção e na remoção para verificar se o aluno pertence ou não à turma não precisa ser implementada utilizando uma busca binária, pode ser uma busca linear.</li>
+<li>A busca binária deve ser feita tanto quando a lista está ordenada de forma crescente, quanto quando está ordenada de forma decrescente.</li>
+</ul>
+
+<ul>
+<li>As mensagens de erros que devem ser impressas em cada caso estão listadas na seção <code>Saída</code>.</li>
+</ul>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste de: uma lista com <code>n</code> inteiros (RA de cada aluno) e uma lista de operações a serem realizadas finalizada pelo caractere <code>s</code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Deverá ser impressa a lista como lida na entrada e, para cada operação 'p' realizada deve ser impressa a lista no estado atual, dadas as operações realizadas anteriormente.</p>
+<p>Quando o programa ler o operador <code>s</code>, que representa a operação de sair, o programa deve encerrar a execução.</p>
+<p>No caso da busca binária, os índices da busca para cada passo devem ser impressos, independente do RA estar na lista ou não. Para isso, basta imprimir o índice da posição do meio da lista durante a busca.</p>
+<p><em>Dica:</em> imprima a saída da seguinte forma:</p>
+<ul>
+<li>Para a busca binária, quando a lista não está ordenada:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Vetor nao ordenado!<span class="pl-pds">"</span></span>)</pre></div>
+<ul>
+<li>Para a busca binária, quando encontra o RA desejado:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-c1">%d</span> esta na posicao: <span class="pl-c1">%d</span><span class="pl-pds">"</span></span>%(ra, pos))</pre></div>
+<ul>
+<li>Para a busca binária, quando o RA não está na lista:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-c1">%d</span> nao esta na lista!<span class="pl-pds">"</span></span>%(ra))</pre></div>
+<ul>
+<li>Para a inserção, quando o limite máximo de alunos matriculados é excedido:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Limite de vagas excedido!<span class="pl-pds">"</span></span>)</pre></div>
+<ul>
+<li>Para a inserção, quando o RA já está na lista:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Aluno ja matriculado na turma!<span class="pl-pds">"</span></span>)</pre></div>
+<ul>
+<li>Para a remoção, quando a turma não possui alunos matriculados:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Nao ha alunos cadastrados na turma!<span class="pl-pds">"</span></span>)</pre></div>
+<ul>
+<li>Para a remoção, quando o RA não está na lista:</li>
+</ul>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Aluno nao matriculado na turma!<span class="pl-pds">"</span></span>)</pre></div>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<p>Teste 01</p>
+<p>Entrada</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">165291</span> <span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">173589</span> <span class="pl-c1">161817</span> <span class="pl-c1">152602</span> <span class="pl-c1">192032</span>
+p
+c
+p
+i <span class="pl-c1">182220</span>
+p
+r <span class="pl-c1">161817</span>
+p
+b <span class="pl-c1">151558</span>
+r <span class="pl-c1">181322</span>
+p
+s</pre></div>
+<p>Saída</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">165291</span> <span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">173589</span> <span class="pl-c1">161817</span> <span class="pl-c1">152602</span> <span class="pl-c1">192032</span>
+<span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">152602</span> <span class="pl-c1">161817</span> <span class="pl-c1">165291</span> <span class="pl-c1">173589</span> <span class="pl-c1">192032</span>
+<span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">152602</span> <span class="pl-c1">161817</span> <span class="pl-c1">165291</span> <span class="pl-c1">173589</span> <span class="pl-c1">182220</span> <span class="pl-c1">192032</span>
+<span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">152602</span> <span class="pl-c1">165291</span> <span class="pl-c1">173589</span> <span class="pl-c1">182220</span> <span class="pl-c1">192032</span>
+<span class="pl-c1">3</span> <span class="pl-c1">1</span> <span class="pl-c1">0</span>
+<span class="pl-c1">151558</span> esta na posicao: <span class="pl-c1">0</span>
+Aluno nao matriculado na turma!
+<span class="pl-c1">151558</span> <span class="pl-c1">152595</span> <span class="pl-c1">152602</span> <span class="pl-c1">165291</span> <span class="pl-c1">173589</span> <span class="pl-c1">182220</span> <span class="pl-c1">192032</span> </pre></div>
+<p>Teste 02</p>
+<p>Entrada</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">178816</span> <span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">189094</span> <span class="pl-c1">181654</span> <span class="pl-c1">175495</span> <span class="pl-c1">191114</span> <span class="pl-c1">170387</span> <span class="pl-c1">188941</span> <span class="pl-c1">163086</span>
+p
+r <span class="pl-c1">181654</span>
+p
+c
+p
+i <span class="pl-c1">160478</span>
+p
+i <span class="pl-c1">170387</span>
+p
+d
+p
+r <span class="pl-c1">199113</span>
+p
+s</pre></div>
+<p>Saída</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">178816</span> <span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">189094</span> <span class="pl-c1">181654</span> <span class="pl-c1">175495</span> <span class="pl-c1">191114</span> <span class="pl-c1">170387</span> <span class="pl-c1">188941</span> <span class="pl-c1">163086</span>
+<span class="pl-c1">178816</span> <span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">189094</span> <span class="pl-c1">175495</span> <span class="pl-c1">191114</span> <span class="pl-c1">170387</span> <span class="pl-c1">188941</span> <span class="pl-c1">163086</span>
+<span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">163086</span> <span class="pl-c1">170387</span> <span class="pl-c1">175495</span> <span class="pl-c1">178816</span> <span class="pl-c1">188941</span> <span class="pl-c1">189094</span> <span class="pl-c1">191114</span>
+<span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">160478</span> <span class="pl-c1">163086</span> <span class="pl-c1">170387</span> <span class="pl-c1">175495</span> <span class="pl-c1">178816</span> <span class="pl-c1">188941</span> <span class="pl-c1">189094</span> <span class="pl-c1">191114</span>
+Aluno ja matriculado na turma!
+<span class="pl-c1">150656</span> <span class="pl-c1">156803</span> <span class="pl-c1">160478</span> <span class="pl-c1">163086</span> <span class="pl-c1">170387</span> <span class="pl-c1">175495</span> <span class="pl-c1">178816</span> <span class="pl-c1">188941</span> <span class="pl-c1">189094</span> <span class="pl-c1">191114</span>
+<span class="pl-c1">191114</span> <span class="pl-c1">189094</span> <span class="pl-c1">188941</span> <span class="pl-c1">178816</span> <span class="pl-c1">175495</span> <span class="pl-c1">170387</span> <span class="pl-c1">163086</span> <span class="pl-c1">160478</span> <span class="pl-c1">156803</span> <span class="pl-c1">150656</span>
+Aluno nao matriculado na turma!
+<span class="pl-c1">191114</span> <span class="pl-c1">189094</span> <span class="pl-c1">188941</span> <span class="pl-c1">178816</span> <span class="pl-c1">175495</span> <span class="pl-c1">170387</span> <span class="pl-c1">163086</span> <span class="pl-c1">160478</span> <span class="pl-c1">156803</span> <span class="pl-c1">150656</span> </pre></div>
+<p>Teste 03</p>
+<p>Entrada</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">156160</span> <span class="pl-c1">199178</span> <span class="pl-c1">153619</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span>
+p
+r <span class="pl-c1">182790</span>
+p
+c
+p
+r <span class="pl-c1">199178</span>
+p
+i <span class="pl-c1">195262</span>
+p
+i <span class="pl-c1">189109</span>
+p
+d
+p
+i <span class="pl-c1">165443</span>
+p
+c
+p
+b <span class="pl-c1">153619</span>
+b <span class="pl-c1">180665</span>
+i <span class="pl-c1">189714</span>
+p
+i <span class="pl-c1">156307</span>
+p
+s</pre></div>
+<p>Saída</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-c1">156160</span> <span class="pl-c1">199178</span> <span class="pl-c1">153619</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span>
+Aluno nao matriculado na turma!
+<span class="pl-c1">156160</span> <span class="pl-c1">199178</span> <span class="pl-c1">153619</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span> <span class="pl-c1">199178</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">186388</span> <span class="pl-c1">193574</span> <span class="pl-c1">195262</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">186388</span> <span class="pl-c1">189109</span> <span class="pl-c1">193574</span> <span class="pl-c1">195262</span>
+<span class="pl-c1">195262</span> <span class="pl-c1">193574</span> <span class="pl-c1">189109</span> <span class="pl-c1">186388</span> <span class="pl-c1">156160</span> <span class="pl-c1">153619</span>
+<span class="pl-c1">195262</span> <span class="pl-c1">193574</span> <span class="pl-c1">189109</span> <span class="pl-c1">186388</span> <span class="pl-c1">165443</span> <span class="pl-c1">156160</span> <span class="pl-c1">153619</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">165443</span> <span class="pl-c1">186388</span> <span class="pl-c1">189109</span> <span class="pl-c1">193574</span> <span class="pl-c1">195262</span>
+<span class="pl-c1">3</span> <span class="pl-c1">1</span> <span class="pl-c1">0</span>
+<span class="pl-c1">153619</span> esta na posicao: <span class="pl-c1">0</span>
+<span class="pl-c1">3</span> <span class="pl-c1">1</span> <span class="pl-c1">2</span>
+<span class="pl-c1">180665</span> nao esta na lista!
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">165443</span> <span class="pl-c1">186388</span> <span class="pl-c1">189109</span> <span class="pl-c1">189714</span> <span class="pl-c1">193574</span> <span class="pl-c1">195262</span>
+<span class="pl-c1">153619</span> <span class="pl-c1">156160</span> <span class="pl-c1">156307</span> <span class="pl-c1">165443</span> <span class="pl-c1">186388</span> <span class="pl-c1">189109</span> <span class="pl-c1">189714</span> <span class="pl-c1">193574</span> <span class="pl-c1">195262</span> </pre></div>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab14.py</code>.</li><li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)
+python3 lab14.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+
+
+    </article>
+</body>
+</html>

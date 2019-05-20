@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 04</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 04 - Balanceamento de Carga na Aliança Rebelde</h1><p>Prazo de entrega: <strong>05/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>O transporte interestelar de cargas apresenta uma série de medidas de segurança, e uma dessas medidas é a distribuição de pesos no interior da espaçonave. Essa medida estabelece que deve haver um balanceamento na carga que será transportada, ou seja, o peso na parte traseira da aeronave deve ser compatível com o peso na parte da frente da aeronave. Quando o balanceamento é bem realizado, a espaçonave voa mais rápido e consome menos combustível.<br>
+Nas bases de abastecimento da aliança rebelde cada espaçonave é carregada com 4 containers. Esses containers estão carregados com munições e suprimentos. Cada container apresenta seu peso total em toneladas, representado por um número inteiro positivo.<br>
+Exemplo:<br>
+c<sub>1</sub> = 4 toneladas.<br>
+c<sub>2</sub> = 7 toneladas.<br>
+c<sub>3</sub> = 3 toneladas.<br>
+c<sub>4</sub> = 8 toneladas.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>Como engenheiro de software da aliança rebelde, você deve criar um programa que, dado o peso de 4 containers, determina se é possível estabelecer um balanceamento da carga perfeito, ou seja, se é possível dividir a carga na parte traseira e dianteira da espaçonave de tal forma que o peso na parte traseira seja igual ao peso na parte dianteira.</p>
+<p><a href="example.png" target="_blank" rel="noopener noreferrer"><img src="example.png" alt="Exemplo" style="max-width:100%;"></a></p>
+<p>Nos dois primeiros exemplos acima vemos que é possível separar os containers em 2 grupos, tal que a soma de pesos do grupo à esquerda é igual ao da direita, indicando que é possível distribuir os containers desta forma na espaçonave. No último exemplo acima, é impossível criar 2 grupos com os pesos 1, 3, 3, 4 tal que os dois grupos tenham pesos iguais.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste de 4 números inteiros positivos, um por linha, contendo respectivamente, os valores de <code>c<sub>1</sub></code>, <code>c<sub>2</sub></code>, <code>c<sub>3</sub></code> e <code>c<sub>4</sub></code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída deverá conter apenas uma linha, contendo somente <code>sim</code> ou <code>nao</code>. Caso seja possível obter um balanceamento perfeito da carga a saída deverá ser <code>sim</code>, caso contrário, a saída deverá ser <code>nao</code>.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>31
+31
+19
+43
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>sim
+</code></pre>
+<h3>
+<a id="user-content-teste-04" class="anchor" href="#teste-04" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 04</h3>
+<p><a href="dados/arq04.in">Entrada</a></p>
+<pre><code>31
+21
+16
+34
+</code></pre>
+<p><a href="dados/arq04.res">Saída</a></p>
+<pre><code>nao
+</code></pre>
+<h3>
+<a id="user-content-teste-12" class="anchor" href="#teste-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 12</h3>
+<p><a href="dados/arq12.in">Entrada</a></p>
+<pre><code>105
+32
+35
+38
+</code></pre>
+<p><a href="dados/arq12.res">Saída</a></p>
+<pre><code>sim
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab04.py</code>.</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos em C irá considerar o comando:<br>
+<code>python3 lab04.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+<p>Independentemente dos resultados dos testes do SuSy, o não cumprimento dos critérios abaixo implicará em nota zero nesta tarefa de laboratório.</p>
+
+    </article>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 01</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 01 - Liber</h1><p>Prazo de entrega: <strong>30/03/2019 00:00:01</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professores:</em> Eduardo C. Xavier e Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>Você é um engenheiro de software da StarUber, uma empresa da Aliança Rebelde que fornece transporte sob-demanda para
+rebeldes por toda a galáxia.
+O aplicativo para celular da StarUber permite que qualquer rebelde possa chamar um veículo de transporte com comodidade,
+praticidade, e segurança, para dentro de uma mesma cidade.
+Os motoristas da StarUber são previamente cadastrados e treinados para evitar serem pegos pelos soldados do Império.
+O aplicativo funciona da seguinte maneira: o rebelde que deseja o transporte aciona o aplicativo, que automaticamente reconhece o lugar onde o rebelde está, sendo necessário apenas indicar o destino da viagem.
+Dentro de poucos minutos um motorista disponível chega ao local de partida onde o rebelde se encontra e o transporta
+para o ponto de destino.</p>
+<p>Você é o engenheiro de software responsável por implementar o sistema de cobranças deste aplicativo.
+O valor a ser cobrado por um transporte é a soma de duas parcelas: a primeira parcela é um valor inicial <code>v<sub>i</sub></code> fixo, e a outra parcela é um valor proporcional à distância percorrida.</p>
+<p>Como as cidades do futuro são perfeitamente construídas, todas elas possuem a forma de um <em>grid</em> (veja figura abaixo).
+A distância  do ponto inicial <code>(x<sub>i</sub>, y<sub>i</sub>)</code> até o ponto final <code>(x<sub>f</sub>, y<sub>f</sub>)</code> é a distância de Manhattan definida como <code>d = (x<sub>f</sub> - x<sub>i</sub>) + (y<sub>f</sub> - y<sub>i</sub>)</code>.</p>
+<p>Você pode assumir que os valores das coordenadas são sempre positivos e que <code>x<sub>f</sub> &gt;= x<sub>i</sub></code> e <code>y<sub>f</sub> &gt;= y<sub>i</sub></code>.</p>
+<p>O valor a ser cobrado por um transporte é <code>d = v<sub>i</sub> + d*t</code> onde <code>t</code> é a taxa por distância percorrida.</p>
+<p><a href="road.png" target="_blank" rel="noopener noreferrer"><img src="road.png" alt="Distância de Mahnattan" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O seu objetivo é fazer um programa que calcula quanto um passageiro terá que pagar para uma determinada viagem.
+O programa recebe o valor do pagamento inicial, os pontos de origem e destino do passageiro, e a taxa por cada unidade de distância percorrida.
+O programa deve então calcular o valor a ser pago pelo passageiro que é dado pela fórmuala
+<code>v<sub>i</sub> + d*t</code>, onde <code>v<sub>i</sub></code> é o valor inicial, <code>d</code> é a distância de Manhattan percorrida e <code>t</code> é a taxa por unidade de distância.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste em 6 valores inteiros, um em cada linha, contendo respectivamente, os valores de <code>v<sub>i</sub></code>, <code>x<sub>i</sub></code>, <code>y<sub>i</sub></code>, <code>x<sub>f</sub></code>, <code>y<sub>f</sub></code> e <code>t</code>.</p>
+<p>Lembre-se que os valores das coordenadas são sempre inteiros positivos e que <code>x<sub>f</sub> &gt;= x<sub>i</sub></code> e <code>y<sub>f</sub> &gt;= y<sub>i</sub></code>.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Como saída o seu programa deverá imprimir o valor a ser pago pelo transporte.</p>
+<p>Você poderá usar o comando abaixo para imprimir a resposta:</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(v)</pre></div>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>3
+1
+1
+2
+1
+1
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>4
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>3
+1
+1
+2
+2
+1
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>5
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>1
+3
+5
+7
+9
+11
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>89
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab01.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos considerar o comando:__
+<code>python3 lab01.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

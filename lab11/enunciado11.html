@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 11</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 11 - O Lobo de Wall Street</h1><p>Prazo de entrega: <strong>03/05/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p><a href="street.jpg" target="_blank" rel="noopener noreferrer"><img src="street.jpg" alt="O Lobo de Wall Street" style="max-width:100%;"></a></p>
+<p>A corretora Stratton Oakmont, é conhecida por usar diversos métodos fraudulentos para operar na bolsa de valores, e você é um dos únicos funcionários honestos da corretora. Para demonstrar que é possível ganhar dinheiro de forma honesta, baseado em técnicas estatísticas e computacionais, você cria um programa que faz a previsão dos valores das ações da bolsa com precisão segura para alguns dias a frente. Este sistema é capaz de prever o valor de cada ação de um conjunto de empresas em cada um dos dias de um período no futuro.</p>
+<p>Para concluir o sistema, ficou faltando apenas criar um programa que determina as decisões de compra e venda, ou seja, para cada dia deve ser determinado se é para ser feita uma operação de compra ou venda e de qual empresa.</p>
+
+<p>O programa está em fase experimental e por conservadorismo deve escolher os dias de compra, ou venda, e de qual empresa, respeitando as seguintes regras:</p>
+<ul>
+<li>Somente quatro empresas terão ações disponíveis para compra/venda;</li>
+<li>A compra e venda se dá por um bloco de ações inteiras, e a entrada do programa contém exatamente o valor do bloco de ações de cada empresa em cada dia;</li>
+<li>A carteira de aplicações deve possuir a cada dia ações de no máximo uma empresa, ou seja, para comprar ações de uma empresa deve-se vender as ações previamente compradas de outra empresa;</li>
+<li>Pode-se comprar e vender ações de cada empresa no máximo uma vez no período avaliado, ou seja, após vendido o bloco de ações de uma empresa, não se pode mais realizar a compra de uma ação dela no futuro;</li>
+<li>A compra de um bloco de ações é feita no fim do dia e a venda é feita no começo, de modo que pode-se vender as ações de uma empresa e comprar a de outra no mesmo dia;</li>
+</ul>
+
+<p>O objetivo é determinar a compra/venda de cada bloco de ações visando maximizar o lucro, sendo o ganho com cada bloco de ações definido como o valor que se vendeu aquele bloco menos o valor que ele foi comprado.</p>
+<p>Por exemplo, considere a entrada abaixo listando os valores das ações de quatro empresas (uma linha para cada empresa) durante três dias (uma coluna para cada dia).</p>
+<pre><code>211.0 120.0 130.0  
+21.00 22.00 23.00  
+310.0 320.0 33.00  
+41.00 42.00 43.00
+</code></pre>
+<p>A melhor solução é comprar o bloco de ações da empresa 3 no dia 1 (por 310.0) e vender no dia 2 (por 320.0), e comprar o bloco de ações da empresa 1 no dia 2 (por 120.0) e vender no dia 3 (por 130.0) obtendo um lucro de 20.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O seu objetivo é fazer um programa que avalia os valores diários dos blocos de ações de quatro empresas e decide qual é o melhor dia para comprar e vender as ações de cada empresa, atentando para as regras de que ele pode ter na carteira de aplicações um bloco por vez e as ações de cada empresa podem ser compradas no máximo uma vez. O número máximo de dias na entrada será 15.</p>
+
+<p>O seu programa deve determinar qual(is) bloco(s) de ações comprar/vender de
+tal forma a se maximizar o lucro.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste em um valor inteiro <code>d</code> representando a quantidade de dias no período analisado, seguido de <code>d</code> valores reais para cada uma das quatro empresas avaliadas, representando os valores do bloco de ações da empresa em cada dia, começando no dia 1 até o dia <code>d</code>.</p>
+<p>Por exemplo, se a entrada for igual a</p>
+<pre><code>3  
+211.0
+120.0
+130.0  
+21.00
+22.00
+23.00  
+310.0
+320.0
+33.00  
+41.00
+42.00
+43.00
+</code></pre>
+<p>significa que serão avaliados 3 dias,
+a ação da primeira empresa no primeiro dia vale 211, no segundo dia vale 120 e no terceiro dia vale 130;
+a ação da segunda empresa no primeiro dia vale 21, no segundo dia vale 22 e no terceiro dia vale 23;
+a ação da terceira empresa no primeiro dia vale 310, no segundo dia vale 320 e no terceiro dia vale 33;
+a ação da quarta empresa no primeiro dia vale 41, no segundo dia vale 42 e no terceiro dia vale 43.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Como saída o seu programa deverá imprimir para cada empresa de 1 até 4, nesta ordem,
+as informações:</p>
+<pre><code>acao N: compra DC, venda DV, lucro LC
+</code></pre>
+<p>onde <code>N</code> é o número da empresa (de 1 até 4), <code>DC</code> o dia da compra realizada, <code>DV</code> o
+dia da venda, e <code>LC</code> o lucro com 2 casas decimais. <b>OBS:</b> Só deverá ser impresso
+informações de compra/venda para uma empresa se efetivamente foi feita uma operação
+com a empresa.</p>
+<p>Por fim deve ser impresso o lucro total:</p>
+<pre><code>Lucro: LC
+</code></pre>
+<p>onde <code>LC</code> deve ser o lucro total obtido com 2 casas decimais.</p>
+<p>Se não for realizada nenhuma operação de compra/venda com nenhuma empresa o programa
+deverá imprimir apenas:</p>
+<pre><code>Lucro: 0.00
+</code></pre>
+<p>Uma saída correta para o exemplo anterior é</p>
+<pre><code>acao 1: compra 2, venda 3, lucro 10.00  
+acao 3: compra 1, venda 2, lucro 10.00  
+Lucro: 20.00
+</code></pre>
+<p>Você poderá usar o comando abaixo para imprimir a relação de compra e venda:</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>acao <span class="pl-c1">%d</span>: compra <span class="pl-c1">%d</span>, venda <span class="pl-c1">%d</span>, lucro <span class="pl-c1">%.2f</span><span class="pl-pds">"</span></span> % (empresa, dia_compra, dia_venda, lucro))</pre></div>
+<p>E o comando abaixo para imprimir o lucro</p>
+<div class="highlight highlight-source-c"><pre><span class="pl-en">print</span>(<span class="pl-s"><span class="pl-pds">"</span>Lucro: <span class="pl-c1">%.2f</span><span class="pl-pds">"</span></span> % (lucro_total))</pre></div>
+<h2>
+<a id="user-content-dica-de-implementação" class="anchor" href="#dica-de-implementa%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dica de Implementação</h2>
+<p>Para cada empresa <code>i</code>  seja <code>c<sub>i</sub></code> (<code>v<sub>i</sub></code>) uma variável que indica o dia de compra (venda)
+do bloco de ações da empresa. Se <code>c<sub>i</sub> = 0</code> assume-se que não haverá compra para esta empresa
+e se <code>c<sub>i</sub></code> estiver em <code>[1, d]</code> haverá compra com venda em <code>v<sub>i</sub></code> &gt; <code>c<sub>i</sub></code>.
+Você pode gerar todas as possibilidades de dias  de compra/venda para as 4 empresas usando
+laços encaixados, mas estes dias só serão válidos se não houver interseção entre os dias de compra/venda
+de empresas diferentes. Então para os intervalos gerados (<code>c<sub>i</sub></code>,<code>v<sub>i</sub></code>) em que <code>c<sub>i</sub>≠ 0</code>, basta testar se são disjuntos,
+e ao longo da geração dos intervalos armazenar aqueles que dão o maior lucro.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>3
+211.0
+120.0
+130.0
+21.0
+22.0
+23.0
+310.0
+320.0
+33.0
+41.0
+42.0
+43.0
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>acao 1: compra 2, venda 3, lucro 10.00
+acao 3: compra 1, venda 2, lucro 10.00
+Lucro: 20.00
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>3
+120.0
+110.0
+100.0
+140.0
+130.0
+100.0
+150.0
+120.0
+100.0
+200.0
+100.0
+50.0
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>Lucro: 0.00
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>6
+97.90464827134993
+110.79664912859559
+73.6648425881206
+54.77638928246962
+71.92490210576727
+72.02502251918975
+114.11608469476106
+80.99485419515582
+61.82542756040088
+51.253852586699736
+45.337023611134946
+26.86887121417667
+111.25256936841431
+112.37442355055695
+78.98615023519616
+79.42543192404364
+65.09424199247127
+61.067558706866414
+106.3366935563061
+115.52081950802769
+164.91602924698174
+125.67137361938967
+118.87430640574921
+153.40024647464554
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>acao 1: compra 4, venda 6, lucro 17.25
+acao 3: compra 3, venda 4, lucro 0.44
+acao 4: compra 1, venda 3, lucro 58.58
+Lucro: 76.27
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>15</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab11.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos considerar o comando:
+<code>python3 lab11.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>

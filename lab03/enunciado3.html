@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 03</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 03 - Abastecimento</h1><p>Prazo de entrega: <strong>05/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>João é motorista de caminhão e trabalha transportando gasolina. Toda manhã João vai até a distribuidora onde trabalha e é alocado para dirigir um caminhão tanque. O tanque de transporte de combustível do caminhão possui formato cilíndrico, com um certo diâmetro <code>d</code> e comprimento <code>h</code>, e este é sempre preenchido completamente com combustível para reabastecer 3 postos no dia, digamos
+postos A, B e C. Cada posto possui uma certa demanda de litros de combustível.</p>
+<p>Infelizmente os caminhões alocados para João sempre possuem problemas no medidor de combustível do tanque de transporte. O gerente faz isto de propósito pois sabe que João é esperto, e sempre é capaz de determinar se é possível abastecer um posto com o que há de combustível restante no tanque de transporte. O trajeto do caminhão é fixo, sempre passando no posto A, depois em B, e finalmente em C.</p>
+<p>Sabendo o diâmetro <code>d</code> e o comprimento <code>h</code> do tanque de transporte de gasolina, João tem que determinar se a quantidade de gasolina presente no tanque é suficiente para reabastecer cada posto de gasolina no trajeto.<br>
+Note que quando um posto de gasolina é reabastecido, a quantidade de gasolina presente no tanque diminui exatamente do valor demandado pelo posto. Caso a quantidade de gasolina presente no tanque seja insuficiente para reabastecer um posto de gasolina, o caminhão deve seguir sua trajetória sem descarregar nada no posto em questão.</p>
+<p><a href="example.png" target="_blank" rel="noopener noreferrer"><img src="example.png" alt="Exemplo" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O objetivo deste laboratório é criar um programa como o que João criou para determinar se é possível ou não abastecer cada posto no trajeto do caminhão.  São dados como entrada o diâmetro e o comprimento do tanque de gasolina em metros e a demanda de cada posto em litros. O programa deve determinar se é possível realizar o reabastecimento dos postos.</p>
+<p>DICA:<br>
+Volume Cilindro<br>
+<a href="tip.png" target="_blank" rel="noopener noreferrer"><img src="tip.png" alt="Dica" style="max-width:100%;"></a></p>
+<p>Atenção para as unidades de medidas:
+1 m3 = 1000 L</p>
+<p>Você deve usar  o valor de pi como sendo 3.14.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste de 5 números reais positivos, um por linha, contendo respectivamente, os valores de diâmetro<code>d</code> e comprimento<code>h</code> em metros, e as demandas do postos A (<code>a</code>),  B (<code>b</code>) e  C (<code>c</code>) todas em litros.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída deverá conter três linhas (uma linha por posto de gasolina), contendo <code>posto X foi reabastecido</code> quando o posto X for reabastecido e <code>posto X nao foi reabastecido</code> quando o posto X não for reabastecido.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>2.25
+7.31
+14377.59
+16153.58
+13500.26
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>posto A foi reabastecido
+posto B nao foi reabastecido
+posto C foi reabastecido
+</code></pre>
+<h3>
+<a id="user-content-teste-05" class="anchor" href="#teste-05" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 05</h3>
+<p><a href="dados/arq05.in">Entrada</a></p>
+<pre><code>2.31
+9.00
+3788.69
+3410.64
+11813.10
+</code></pre>
+<p><a href="dados/arq05.res">Saída</a></p>
+<pre><code>posto A foi reabastecido
+posto B foi reabastecido
+posto C foi reabastecido
+</code></pre>
+<h3>
+<a id="user-content-teste-14" class="anchor" href="#teste-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 14</h3>
+<p><a href="dados/arq14.in">Entrada</a></p>
+<pre><code>2.31
+8.34
+29233.49
+21896.73
+10525.58
+</code></pre>
+<p><a href="dados/arq14.res">Saída</a></p>
+<pre><code>posto A foi reabastecido
+posto B nao foi reabastecido
+posto C nao foi reabastecido
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab03.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos em Python irá considerar o comando:<br>
+<code>python3 lab03.py</code>;</li>
+<li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+<p>Independentemente dos resultados dos testes do SuSy, o não cumprimento dos critérios abaixo implicará em nota zero nesta tarefa de laboratório.</p>
+
+    </article>
+</body>
+</html>

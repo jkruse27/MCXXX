@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 05</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 05 - Soma Acumulada</h1><p>Prazo de entrega: <strong>11/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>Você é um engenheiro da Frota Estelar, servindo na espaçonave USS Enterprise
+juntamente com o Dr. Spock e o Capitão Christopher Pike.
+Você descobriu que existe um vazamento de antimatéria no condutor de
+combustível da Enterprise, mas
+antes que pudesse localizar a fonte do vazamento, uma frota de naves inimigas Klingon apareceu e começou a atacar.</p>
+<p>Os escudos da espaçonave foram ativados, mas não irão aguentar muito tempo. O plano é
+juntar combustível suficiente para fazer a espaçonave entrar em dobra espacial
+e fugir. O problema é que com o vazamento de antimatéria, parte do combustível está
+sumindo, pois cada unidade de antimatéria aniquila uma unidade de combustível.</p>
+<p>Dado que o escudo da espaçonave tem um tempo de duração <code>t</code>, que para entrar em dobra é necessário uma quantidade de combustível <code>c</code>, e que para cada unidade de antimatéria, uma unidade de combustível é cancelada, você deve determinar se é possível juntar combustível suficiente para fugir antes que o escudo pare de funcionar.</p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O objetivo deste laboratório é criar um programa que, dado o tempo máximo <code>t</code>, em segundos, que o escudo irá funcionar, a quantidade <code>c</code> de combustível  necessária para fazer a Enterprise entrar em dobra espacial, e uma sequência de números, um número por segundo, indicando a quantidade de combustível passando pelo condutor (valores positivos) ou antimatéria (valores negativos), deve-se determinar se é possível juntar combustível suficiente para fugir antes que o escudo pare de funcionar.</p>
+<p>Note que para cada unidade de antimatéria, é aniquilada uma unidade de combustível.
+Considere por exemplo a sequência de números abaixo indicando a quantidade de combustível e antimatéria passando pelo condutor de combustível:</p>
+<pre><code>-2 -4 3 3 3 4 -1 -1 4
+</code></pre>
+<p>No final do tempo <code>3</code> o total de combustível é <code>0</code>, pois houve um fluxo de <code>-6</code> de antimatéria e <code>6</code> de combustível, já ao final do tempo <code>5</code>, o total de combustível é <code>7</code>, e ao final do tempo <code>8</code> o total de combustível é <code>9</code>.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste de três linhas, na primeira linha será dado um número inteiro positivo indicando o tempo <code>t</code> em segundos, restante até que o escudo da espaçonave falhe, na segunda linha será dado um outro inteiro positivo indicando a quantidade de combustível <code>c</code> necessária para fazer a espaçonave entrar em dobra,  e na última linha,  uma sequência de números inteiros, positivos e negativos, contendo o fluxo de combustível (valores positivos) ou antimatéria (valores negativos) a cada segundo.</p>
+<p><strong>Importante</strong>: Você pode assumir que há números suficientes na sequencia de números da terceira linha para que ou atinja-se a quantidade de combustível necessário ou o escudo pare de funcionar e a nave seja destruída.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>A saída deverá conter duas linhas: a primeira linha deverá conter a palavra <code>sim</code> se for possível juntar combustível suficiente para fugir antes que o escudo acabe, e a palavra <code>nao</code> caso contrário;  a segunda linha deve conter o instante de tempo em que foi possível fugir ou então o instante de tempo que a nave foi destruída.</p>
+<p><strong>Importante</strong>: O tempo inicia em zero segundos. Note que ao final de um determinado tempo <code>t</code>, se for juntado combustível suficiente, a nave consegue fugir apenas no instante de tempo seguinte <code>t+1</code>. Da mesma forma, se o escudo para de funcionar no tempo <code>t</code>, a espaçonave será destruída no segundo seguinte <code>t+1</code>.</p>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-01" class="anchor" href="#teste-01" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 01</h3>
+<p><a href="dados/arq01.in">Entrada</a></p>
+<pre><code>5
+10
+7 -5 3 6 -1
+</code></pre>
+<p><a href="dados/arq01.res">Saída</a></p>
+<pre><code>sim
+4
+</code></pre>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>6
+20
+6 8 -10 5 9 -4
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>nao
+7
+</code></pre>
+<h3>
+<a id="user-content-teste-03" class="anchor" href="#teste-03" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 03</h3>
+<p><a href="dados/arq03.in">Entrada</a></p>
+<pre><code>5
+15
+10 2 -6 4 5
+</code></pre>
+<p><a href="dados/arq03.res">Saída</a></p>
+<pre><code>sim
+5
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab05.py</code>;</li><li>Para a realização dos testes do SuSy, a compilação dos programas desenvolvidos em Python irá considerar o comando:<br>
+<code>python3 lab05.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+<h2>
+<a id="user-content-critérios-importantes" class="anchor" href="#crit%C3%A9rios-importantes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Critérios importantes</h2>
+<p>Independentemente dos resultados dos testes do SuSy, o não cumprimento dos critérios abaixo implicará em nota zero nesta tarefa de laboratório.</p>
+
+    </article>
+</body>
+</html>

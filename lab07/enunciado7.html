@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+    <title>Laboratório 07</title>        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='https://sindresorhus.com/github-markdown-css/github-markdown.css'>
+    <style>
+        .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+        font-family: 'Noto Sans', sans-serif;
+        }
+        .markdown-body h6 { margin-bottom: 0; }
+        .markdown-body h6 + ul li {
+        display: inline-block;
+        width: 100%;
+        max-width: 426px;
+        vertical-align: top;
+        }
+        .markdown-body h6 + ul li pre {
+          max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <article class='markdown-body'>
+<h3>
+<a id="user-content-instituto-de-computação---unicamp" class="anchor" href="#instituto-de-computa%C3%A7%C3%A3o---unicamp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instituto de Computação - Unicamp</h3>
+<h3>
+<a id="user-content-mc102---algoritmos-e-programação-de-computadores" class="anchor" href="#mc102---algoritmos-e-programa%C3%A7%C3%A3o-de-computadores" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MC102 - Algoritmos e Programação de Computadores</h3>
+<h1>
+<a id="user-content-laboratório-id---title" class="anchor" href="#laborat%C3%B3rio-id---title" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Laboratório 07 - Street Fighter</h1><p>Prazo de entrega: <strong>19/04/2019 23:59:59</strong></p><p>Peso: <strong>1</strong></p>
+<p><em>Professor:</em> Eduardo C. Xavier<br>
+<em>Professor:</em> Luiz F. Bittencourt</p>
+<hr>
+<h2>
+<a id="user-content-descrição" class="anchor" href="#descri%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descrição</h2>
+<p>O jogo <a href="https://en.wikipedia.org/wiki/Street_Fighter_(video_game)" rel="nofollow">Street Fighter</a> foi um dos primeiros jogos eletrônicos do gênero conhecido como jogos de luta. Neste jogo, um mestre de artes marciais, chamado Ryu, enfrenta outros lutadores em um torneio internacional de artes marciais. Cada combate entre Ryu e um oponente se dá em dois rounds. No início de cada round, cada jogador começa com 50 pontos de vida. O objetivo é atacar o oponente com diferentes golpes, sendo que cada golpe aplicado subtrai uma certa quantidade de pontos de vida do outro combatente. Perde o round aquele jogador cujos pontos de vida ficar menor ou igual a zero primeiro. Vence a luta quem ganhar o maior número de rounds.</p>
+<p><a href="Street_Fighter.png" target="_blank" rel="noopener noreferrer"><img src="Street_Fighter.png" alt="Street Fighter" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-objetivo" class="anchor" href="#objetivo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Objetivo</h2>
+<p>O objetivo deste laboratório é simular uma luta entre Ryu e Ken e determinar
+quem ganhou a luta.</p>
+<h2>
+<a id="user-content-entrada" class="anchor" href="#entrada" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entrada</h2>
+<p>A entrada consiste em uma sequência de inteiros, um em cada linha, representando os valores dos golpes aplicados (<strong>valores positivos</strong>) e recebidos (<strong>valores negativos</strong>) por Ryu. Um round termina quando os pontos de vida de um dos lutadores é menor ou igual a 0.</p>
+<h2>
+<a id="user-content-saída" class="anchor" href="#sa%C3%ADda" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Saída</h2>
+<p>Para cada sequência de golpes de um mesmo lutador, o programa deve imprimir uma nova linha com a mensagem <code>l: pv - soma = pv<sub>novo</sub></code>, onde <code>l</code> indica o lutador que recebeu a sequência de golpes, <code>pv</code> são os pontos de vida atuais do lutador <code>l</code>, <code>soma</code> representa a soma dos golpes da sequência, e <code>pv<sub>novo</sub></code> é a quantidade de pontos de vida atualizado. Observe que uma sequência de golpes termina assim que os pontos de vida de um dos lutadores chegar a 0.</p>
+<p>Por fim, o programa deve imprimir uma linha contendo somente <code>Ryu venceu</code>, <code>Ken venceu</code> ou <code>empatou</code> de acordo com o resultado geral da luta.</p>
+<h2>
+<a id="user-content-exemplo-comentado" class="anchor" href="#exemplo-comentado" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplo Comentado</h2>
+<p>Suponha que a sequência de entrada seja composta pelos números:</p>
+<pre><code>-6, 1, -10, -5, 8, -15, -10, -5, -6, 10, 5, 15, -10, -5, 15, -10, 15
+</code></pre>
+<p>O programa deve imprimir a seguinte sequência de linhas para o primeiro round:</p>
+<pre><code>Ryu: 50 - 6 = 44
+Ken: 50 - 1 = 49
+Ryu: 44 - 15 = 29
+Ken: 49 - 8 = 41
+Ryu: 29 - 30 = -1
+</code></pre>
+<p>Como os pontos de vida de Ryu ficaram negativos, Ken venceu o primeiro round. Observe que os pontos de vida de Ryu chegam a 0 no terceiro golpe da sequência negativa <code>-15, -10, -5, -6</code>. Como o round termina assim que os pontos chegam a 0, o elemento <code>-6</code> deve ser tratado como o início de uma nova sequência de golpes para o segundo round. Os pontos de vida dos dois jogadores voltam para 50 e inicia-se o segundo round:</p>
+<pre><code>Ryu: 50 - 6 = 44
+Ken: 50 - 30 = 20
+Ryu: 44 - 15 = 29
+Ken: 20 - 15 = 5
+Ryu: 29 - 10 = 19
+Ken: 5 - 15 = -10
+</code></pre>
+<p>Como os pontos de vida de Ken ficaram negativos, Ryu venceu o segundo round, fazendo com que a última linha da saída do programa seja:</p>
+<pre><code>empatou
+</code></pre>
+<h2>
+<a id="user-content-exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h2>
+<h3>
+<a id="user-content-teste-02" class="anchor" href="#teste-02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 02</h3>
+<p><a href="dados/arq02.in">Entrada</a></p>
+<pre><code>-17
+7
+-9
+-8
+8
+18
+9
+17
+17
+-8
+16
+18
+</code></pre>
+<p><a href="dados/arq02.res">Saída</a></p>
+<pre><code>Ryu: 50 - 17 = 33
+Ken: 50 - 7 = 43
+Ryu: 33 - 17 = 16
+Ken: 43 - 52 = -9
+Ken: 50 - 17 = 33
+Ryu: 50 - 8 = 42
+Ken: 33 - 34 = -1
+Ryu venceu
+</code></pre>
+<h3>
+<a id="user-content-teste-08" class="anchor" href="#teste-08" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 08</h3>
+<p><a href="dados/arq08.in">Entrada</a></p>
+<pre><code>6
+-18
+-10
+-9
+6
+-19
+-20
+-15
+13
+-10
+-20
+</code></pre>
+<p><a href="dados/arq08.res">Saída</a></p>
+<pre><code>Ken: 50 - 6 = 44
+Ryu: 50 - 37 = 13
+Ken: 44 - 6 = 38
+Ryu: 13 - 19 = -6
+Ryu: 50 - 35 = 15
+Ken: 50 - 13 = 37
+Ryu: 15 - 30 = -15
+Ken venceu
+</code></pre>
+<h3>
+<a id="user-content-teste-15" class="anchor" href="#teste-15" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teste 15</h3>
+<p><a href="dados/arq15.in">Entrada</a></p>
+<pre><code>5
+6
+-15
+20
+-19
+3
+-9
+8
+6
+-3
+19
+-4
+-7
+2
+-10
+14
+-11
+-16
+-6
+</code></pre>
+<p><a href="dados/arq15.res">Saída</a></p>
+<pre><code>Ken: 50 - 11 = 39
+Ryu: 50 - 15 = 35
+Ken: 39 - 20 = 19
+Ryu: 35 - 19 = 16
+Ken: 19 - 3 = 16
+Ryu: 16 - 9 = 7
+Ken: 16 - 14 = 2
+Ryu: 7 - 3 = 4
+Ken: 2 - 19 = -17
+Ryu: 50 - 11 = 39
+Ken: 50 - 2 = 48
+Ryu: 39 - 10 = 29
+Ken: 48 - 14 = 34
+Ryu: 29 - 33 = -4
+empatou
+</code></pre>
+<p>Para mais exemplos, consulte os
+<a href="dados/testes.html">testes abertos no Susy</a>.</p>
+<h2>
+<a id="user-content-observações" class="anchor" href="#observa%C3%A7%C3%B5es" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Observações</h2>
+<ul>
+<li>O número máximo de submissões é <strong>10</strong>;</li><li>O seu programa deve estar completamente contido em um único arquivo denominado <code>lab07.py</code>;</li><li>Para a realização dos testes do SuSy, a execução do código em Python se dará da seguinte forma: (Linux e OSX)<br>
+<code>python3 lab07.py</code>;</li><li>Você deve incluir, no início do seu programa, uma breve descrição dos objetivos do programa, da entrada e da saída, além do seu nome e do seu RA;</li>
+<li>Indente corretamente o seu código e inclua comentários no decorrer do seu programa.</li>
+</ul>
+
+    </article>
+</body>
+</html>
