@@ -1,10 +1,12 @@
 #include "montador.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include "auxiliary.h"
 
 //Marcador para o lado da linha
 typedef enum{
-  Left = 0, Right = 1
+  Left = 0, Right
 }Side;
 
 /*
@@ -12,20 +14,20 @@ typedef enum{
   que serao elementos de uma lista ligada
 */
 typedef struct Rotulo{
-  char name[64];
+  char *name;
   unsigned line;
   Side side;
-  Rotulo *next_rotulo;
+  struct Rotulo *next_rotulo;
 }Rotulo;
 
 /*
   Struct para os .set que serao elementos de uma lista ligada
 */
 typedef struct Set{
-    char name[64];
-    int value_number;
-    char value_set[64];
-    Set *next_set;
+    char *name;
+    TipoDoToken type;
+    char *value_set;
+    struct Set *next_set;
 }Set;
 
 /*
@@ -37,8 +39,8 @@ typedef struct Set{
  */
 int emitirMapaDeMemoria()
 {
-    Rotulo *r_linked_list = null;     //Lista ligada contendo os rotulos
-    Set *s_linked_list = null;        //Lista ligada contendo os .set
+    Rotulo *r_linked_list = NULL;     //Lista ligada contendo os rotulos
+    Set *s_linked_list = NULL;        //Lista ligada contendo os .set
     int size = getNumberOfTokens();   //Numero de tokens na lista
     Token *temp;                      //Variavel temporaria para receber o comando atual
     unsigned current_line = 0;        //Linha atual
@@ -54,32 +56,29 @@ int emitirMapaDeMemoria()
         i++;
         temp = recuperaToken(i);
         if(temp->tipo == Decimal)
-          current_line = get_dec(temp->palavra);
+          current_line = dec(temp->palavra);
         else
-          current_line = get_hex(temp->palavra);
+          current_line = hex(temp->palavra);
         current_side = Left;
       }
       //  Se a diretiva for .align, pula para a proxima linha e lado permitidos
       else if(temp->tipo == Diretiva && !strcmp(temp->palavra, ".align")){
-        int j;
 
         //  Se a palavra estiver na direita comeca a contar a partir da linha seguinte
         //  Caso contrario comeca a contar a partir da propria linha
-        if(current_side == RIGHT)
-          j = current_line + 1;
-        else
-          j = current_line;
+        current_side = (current_side + 1) % 2;
+        current_line = current_side == Left ? current_line + 1 : current_line;
 
         //  Encontra a proxima linha qu e divisivel pelo parametro do align
         //  e atualiza a liha atual e o lado atual
         i++;
-        int div = get_dec(recuperaToken(i)->palavra);
-        for(j; j < 1024; i++){
+        int div = dec(recuperaToken(i)->palavra);
+
+        for(int j = 0; j < 1024; i++){
           if(j % div == 0){
             current_line = j;
             break;
             }
-        current_side = Left;
         }
       }
       //  Se a palavra for um rotulo, verifica se ele ja esta na lista, e,
@@ -89,10 +88,10 @@ int emitirMapaDeMemoria()
         Rotulo *element = r_linked_list;
 
         //  Remove o ':' do rotulo
-        temp->palavra[strlen(temp->palavra) - 2] = '\0'
+        temp->palavra[strlen(temp->palavra) - 2] = '\0';
 
         //Checa se a definicao ja se encontra na lista
-        while(element != null){
+        while(element != NULL){
           if(!strcmp(element->name, temp->palavra))
             is_on_list = 1;
           element = element->next_rotulo;
@@ -100,7 +99,7 @@ int emitirMapaDeMemoria()
 
         //  Caso nao esteja, adiciona-a no inicio
         if(!is_on_list){
-          Rotulo *new_element;
+          Rotulo *new_element = malloc(sizeof(Rotulo));
           new_element->name = temp->palavra;
           new_element->line = current_line;
           new_element->side = current_side;
@@ -112,7 +111,34 @@ int emitirMapaDeMemoria()
       //  Se a palavra for .set, verifica se a palavra seguinte ja esta na lista
       //  e, caso nao esteja, adiciona-a
       else if(temp->tipo == Diretiva && !strcmp(temp->palavra, ".set")){
+        char is_on_list = 0;
+        Set *element = s_linked_list;
+        Token *aux = recuperaToken(++i);
 
+        //Checa se a definicao ja se encontra na lista
+        while(element != NULL){
+          if(!strcmp(element->name, aux->palavra))
+            is_on_list = 1;
+          element = element->next_set;
+        }
+
+        Token *aux2 = recuperaToken(++i);
+
+        //  Caso nao esteja, adiciona-a no inicio
+        if(!is_on_list){
+          Set *new_element = malloc(sizeof(Rotulo));
+          new_element->name = aux->palavra;
+          new_element->type = aux2->tipo;
+          new_element->next_set = s_linked_list;
+          s_linked_list = new_element;
+        }
+
+      }
+      //  Caso a palavra atual seja uma instrucao atualiza a linha e o lado
+      //  em que o programa se encontra
+      else if(temp->tipo == Instrucao){
+        current_side = (current_side + 1) % 2;
+        current_line = current_side == Left ? current_line + 1 : current_line;
       }
     }
 
