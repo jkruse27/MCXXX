@@ -1,4 +1,5 @@
 #include "auxiliary.h"
+#include <stdio.h>
 
 /*
   Returns the decimal equivalent of a hexadecimal number expressed as a string
@@ -84,4 +85,129 @@ void free_s(Set *initial){
     free(aux);
   }
 
+}
+
+/*
+  Converte um int para uma string em hexadecimal com 3 ou 10 caracteres
+  Recebe o numero a ser convertido e o tipo (3 ou 10 caracteres)
+*/
+char *dec_to_hex(int dec, char type){
+
+  char *string;
+
+  if(type == THREE_CHARS){
+    string = malloc(4*sizeof(char));
+    string[3] = '\0';
+
+    for(int j = 2; j >= 0; j--){
+      int a = dec%16;
+      if(a < 10)
+        string[j] = a + 48;
+      else
+        string[j] = a + 55;
+      dec = dec/16;
+      }
+  }else{
+    string = malloc(14*sizeof(char));
+    string[13] = '\0';
+
+    char string1[10];
+
+    for(int j = 9; j >= 0; j--){
+      int a = dec%16;
+
+      if(a < 10)
+        string1[j] = a + 48;
+      else
+        string1[j] = a + 55;
+      dec = dec/16;
+      }
+
+    for(int j = 0, k = 0; j < 13; j++){
+      if(j == 2 || j == 6 || j == 9)
+        string[j] = ' ';
+      else
+        string[j] = string1[k++];
+    }
+
+  }
+
+  return string;
+}
+
+/*
+  Completa o numero em hexadecimal com zeros para fechar os 3 ou 10 digitos
+  Recebe o numero em hexadecimal na forma de string e o tipo (3 ou 10 caracteres)
+  Retorna a string contendo o numero com os zeros adicionados
+*/
+char *complete_hex(char *hex, char type){
+
+  int len = strlen(hex); //Tamanho desconsidera o '0x'
+  char *string;
+
+  if(type == THREE_CHARS){
+    string = malloc(4*sizeof(char));
+    string[3] = '\0';
+
+    for(int j = 0; j < 3; j++)
+      if(j < 3 - len + 2)
+        string[j] = '0';
+      else
+        string[j] = hex[len - 3 + j];
+
+  }else{
+    string = malloc(14*sizeof(char));
+    string[13] = '\0';
+
+    char string1[10];
+
+    for(int j = 0, k = 2; j < 10; j++)
+      if(j < 10 - len + 2)
+        string1[j] = '0';
+      else
+        string1[j] = hex[k++] - 32;
+
+    for(int j = 0, k = 0; j < 13; j++){
+      if(j == 2 || j == 6 || j == 9)
+        string[j] = ' ';
+      else
+        string[j] = string1[k++];
+      }
+    }
+
+  return string;
+}
+
+/*
+  Encontra a palavra hexadecimal a que se refere a word
+*/
+char *get_word(char *word, Rotulo *r_list, Set *s_list, char command){
+  Rotulo *r_aux = r_list;
+  Set *s_aux = s_list;
+
+  if(command == WORD){
+    while(r_aux != NULL){
+      if(!strcmp(r_aux->name, word)){
+        return dec_to_hex(r_aux->line, TEN_CHARS);
+      }
+      r_aux = r_aux->next_rotulo;
+    }
+  }
+
+  while(s_aux != NULL){
+    if(!strcmp(s_aux->name, word)){
+      if(s_aux->type == Hexadecimal)
+        return complete_hex(s_aux->value_set, TEN_CHARS);
+      else if(command == WFILL && s_aux->type == Nome){
+        return get_word(s_aux->name, r_list, s_list, WORD);
+      }
+      else{
+        int a = dec(s_aux->value_set);
+        return dec_to_hex(a, TEN_CHARS);
+      }
+    }
+    s_aux = s_aux->next_set;
+  }
+
+  return NULL;
 }

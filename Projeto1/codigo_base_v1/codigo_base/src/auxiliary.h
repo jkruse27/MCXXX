@@ -3,6 +3,11 @@
 #include "montador.h"
 #include <stdlib.h>
 
+#define THREE_CHARS '3'
+#define TEN_CHARS '1'
+#define WORD 'w'
+#define WFILL 'f'
+
 /*
 Marcador para o lado da linha
 */
@@ -48,3 +53,12 @@ void free_r(Rotulo *initial);
 
 //Libera a memoria alocada para a lista ligada de rotulos
 void free_s(Set *initial);
+
+//Converte um int para uma string em hexadecimal com 3 ou 10 caracteres
+char *dec_to_hex(int dec, char type);
+
+//Completa o numero hexadecimal com zeros
+char *complete_hex(char *hex, char type);
+
+//Encontra a palavra a que se refere o word
+char *get_word(char *word, Rotulo *r_list, Set *s_list, char command);
