@@ -54,6 +54,39 @@ play_all_channels:
   mv ra, s10
   ret
 
+# Recebe um numero e transforma em binario salvo em a0, se for seguido de espaco deixa
+# em a1 1 e se for seguido de \n deixa em a1 0
+receive_number:
+  loops1:
+    li a0, 0
+    la a1, char
+    li a2, 1
+    li a7, 63
+    ecall
+
+    la t1, char
+    lb t1, 0(t1)
+
+    li t2, 32
+    beq t1, t2, end6
+    li t2, 10
+    beq t1, t2, end7
+
+    addi t1, t1, -48
+
+    mul t3, t3, t2
+    add t3, t3, t1
+    j loops1
+
+  end6:
+    mv a0, t3
+    li a1, 1
+    jalr x0, tp, 0
+  end7:
+    mv a0, t3
+    li a1, 0
+    jalr x0, tp, 0
+
 # Ignora toda a linha do head
 ignore_head:
   loop:
@@ -103,8 +136,69 @@ get_program:
   beq t0, t1, h
   li t1, 80         # Se a letra for "p" indica que e um program
   beq t0, t1, p
-  #Tratar linha de tempos/nota/etc
-  j end1
+
+
+  la s0, linha
+  la s1, bpm
+  lw s1, 0(s1)
+  la s2, ticks
+  lw s2, 0(s2)
+  li s3, 10
+  div s1, s1, s3
+  li s3, 6000
+
+  #Recebe o primeiro numero, converte e salva
+  jal tp, receive_number
+  beq x0, a1, end5
+  div a0, a0, s1
+  mul a0, a0, s3
+  div a0, a0, s2
+  sw a0, 0(s0)
+  addi s0, s0, 4
+
+  #Recebe o segundo numero, converte e salva
+  jal tp, receive_number
+  div a0, a0, s1
+  mul a0, a0, s3
+  div a0, a0, s2
+  sw a0, 0(s0)
+  addi s0, s0, 4
+
+  loops:
+    jal tp, receive_number
+    sw a0, 0(s0)
+    addi s0, s0, 4
+    beq a1, x0, continue
+    j loops
+
+  continue:
+    la t0, linha
+    la t1, M
+    lw a0, 0(t0)      #t inicial (t atual)
+    lw a1, 4(t0)      #t final
+    lw s0, 12(t0)     #canal
+    lw s1, 16(t0)     #f
+    lw s2, 20(t0)     #v
+
+    slli s1, s1, 24
+    slli s2, s2, 16
+    add a0, a0, t1
+
+    add a0, a0, s0
+    and s3, s1, s2
+
+    loopi:
+      and s4, s3, a0
+      sw s4, 0(a0)
+      addi a0, a0, 16
+      bne a0, a1, loopi
+
+
+    j end1
+  end5:
+    li a0, 0
+    ret
+
   h:
     jal t1, ignore_head
     j end1
@@ -144,14 +238,59 @@ get_program:
         sw a3, 0(t0)          # Salva o valor na posicao certa do vetor C
 
   end1:
+    li a0, 1
     ret
 
 
 .text
 _start:
-############  Implemente o Parser aqui  #############
+  ############  Implemente o Parser aqui  #############
+  # ---------------------- Pega o bpm e o tick ------------------------#
+  oloop:
+    li a0, 0
+    la a1, char
+    li a2, 1
+    li a7, 63
+    ecall
 
-  # ------------------- Zera a Lista C ------------------------ #
+    la t0, char
+    lb t0, 0(t0)
+    li t5, 10
+    mv t1, t0
+    addi t1, t1, -32
+    beq x0, t1, end3
+    addi t0, t0, -48
+    mul a0, a0, t5
+    add a0, a0, t0
+    j oloop
+
+    end3:
+      la t0, bpm
+      sw a0, 0(t0)
+
+      oloop2:
+        li a0, 0
+        la a1, char
+        li a2, 1
+        li a7, 63
+        ecall
+
+        li t5, 10
+        la t0, char
+        lb t0, 0(t0)
+        mv t1, t0
+        addi t1, t1, -10
+        beq x0, t1, end4
+        addi t0, t0, -48
+        mul a0, a0, t5
+        add a0, a0, t0
+        j oloop2
+
+      end4:
+        la t0, ticks
+        sw a0, 0(t0)
+
+  # ------------------------ Zera a Lista C -------------------------- #
   la t0, C                # Carrega a posicao da lista
   li t3, 15               # Numero de iteracoes (elementos da lista - 1)
 
@@ -161,7 +300,7 @@ _start:
     addi t3, t3, -1       # Subtrai 1 do contador
     bne x0, t3, loop4     # Enquanto o contador nao for zero, segue o loop
 
-  # ------------------- Zera a Matriz M ------------------------ #
+  # ----------------------- Zera a Matriz M -------------------------- #
   la t0, M                # Posicao inicial da matriz M
   li t1, 4800000          # Numero de elementos nela (19,2Mb)
   loop5:
@@ -174,10 +313,8 @@ _start:
 
   loop6:
     jal ra, get_program
-    beq x0, a0, end2
-    j loop6
+    bne x0, a0, loop6
 
-  end2:
 
 ############        Fim do Parser       #############
 
@@ -205,5 +342,19 @@ P:  .skip 64
 P2: .skip 64
 C:  .skip 64
 .comm	M,19200000,4 # Reserva um espaço de memória com 19.2MB iniciado no endereço marcalo pelo rótulo M
+
+# Buffer para a leitura char a char
 char:
   .skip 1
+
+# bpm do arquivo
+bpm:
+  .skip 4
+
+# ticks do arquivo
+ticks:
+  .skip 4
+
+#Dados da linha separados de 4 em 4 bytes
+linha:
+  .skip 24

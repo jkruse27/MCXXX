@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+  <head>
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html" charset="utf-8">
+  </head>
+
+  <body style="background: transparent; margin: 0pt">
+    
+    <div class="row-fluid">
+      
+
+      <h2>Atividade de Laboratório 6</h2>
+
+      <h3>Objetivos</h3>
+
+      <p>
+	O objetivo desta atividade é exercitar o uso de instruções aritméticas e a
+	manipulação de entrada e saída utilizando o conjunto de instruções da
+	arquitetura RISC-V.
+      </p>
+
+      <h3>Descrição</h3>
+
+      <p>
+	Neste laboratório, você deve fazer um programa em linguagem de montagem do RISC-V
+	que calcule a sua posição geográfica num plano bidimensional, baseado no
+	tempo atual e em mensagens recebidas de 3 satélites, como ilustrados na figura a seguir.
+      </p>
+
+      <img width="600" alt="Ilustração dos três satélites no plano cartesiano." src="./satellites.jpg">
+
+      <p>
+	Para simplificar o problema, assumimos que o satélite A se encontra na origem no plano
+	cartesiano (0, 0), enquanto B e C têm posições (0, Y<sub>B</sub>) e (X<sub>C</sub>, 0), respectivamente.
+	Os satélites enviam mensagens contendo uma Marca Temporal (<i>timestamp</i>) continuamente
+	através de ondas que se propagam em todas as direções numa velocidade de 3 x 10<sup>8</sup> m/s.
+	Em um dado instante T<sub>R</sub>, você recebeu uma mensagem de cada satélite contendo os
+	tempos T<sub>A</sub>, T<sub>B</sub> e T<sub>C</sub>. Supondo que todos os tempos estejam perfeitamente
+	sincronizados, imprima sua coordenada (x, y) no plano cartesiano.
+	Note que a formulação utilizada neste exercício não é realista.
+      </p>
+
+      <h3>Entrada e Saída</h3>
+      
+      <p>
+	Seu programa deve ler da entrada padrão os valores Y<sub>B</sub>, X<sub>C</sub>, T<sub>A</sub>,
+	T<sub>B</sub>, T<sub>C</sub> e T<sub>R</sub> e imprimir na saída padrão a sua coordenada (x, y). 
+      </p>
+
+      <p>
+	Entrada:
+	<ul>
+	  <li>Linha 1 - Coordenadas Y<sub>B</sub>, X<sub>C</sub>: Valor em
+	    metros, representado por números inteiros de 4 dígitos na base decimal
+	    e precedido pelo sinal '+' ou '-'.
+	  </li>
+	  
+	  <li>Linha 2 - Tempos T<sub>A</sub>, T<sub>B</sub>, T<sub>C</sub> e
+	    T<sub>R</sub>: Valor em nanosegundos e representado por números naturais
+	    de 4 dígitos na base decimal.
+	  </li>
+	</ul>
+
+
+	Para realizar a leitura de dados, basta utilizar a chamada de sistema 63, como no template abaixo:
+
+	<pre>    li a0, 0 # file descriptor = 0 (stdin)
+    la a1, input_adress #  buffer
+    li a2, 1 # size (lendo apenas 1 byte, mas tamanho é variável)
+    li a7, 63 # syscall read (63)
+    ecall
+
+input_adress:   # buffer</pre>
+
+      </p>
+
+      
+      <p>
+	Saída:
+	<ul>
+	  <li>
+	    Sua coordenada (x, y): Valor em metros, <u><b>aproximado</b></u>, representado por
+	    números inteiros de 4 dígitos na base decimal e precedido pelo sinal '+' ou '-'.
+	  </li>
+	</ul>
+      </p>
+
+      <p>
+	Observações:
+	<ul>
+	  <li>
+	    Múltiplos valores impressos ou lidos na mesma linha serão separados por um único espaçamento.
+	  </li>
+	  
+	  <li>
+	    Cada linha é finalizada com o caracter '\n'.
+	  </li>
+	</ul>
+      </p>
+
+      <h3>Exemplo</h3>
+
+      <p>
+      Entrada:
+
+<pre>+0700 -0100
+2000 0000 2240 2300</pre>
+
+Saída:
+<pre>-0088 +0016</pre>
+
+      </p>
+
+      <h3>Dicas</h3>
+
+      <h4>Geometria do problema</h4>
+      
+      <p>
+	Existem diversas formas de resolver o problema. Aqui, sugerimos a utilização das
+	fórmulas do círculo. Seja d<sub>A</sub>, d<sub>B</sub> e d<sub>C</sub> as distâncias
+	entre sua posição e os satélite A, B e C, respectivamente, temos que:
+      </p>
+
+      <table cellpadding="10"> <!-- style="width:100%"> -->
+	<tr>
+	  <td>
+	    x<sup>2</sup> + y<sup>2</sup> = d<sub>A</sub><sup>2</sup>
+	  </td>
+	  <td>
+	    (Eq. 1)
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    x<sup>2</sup> + (y - Y<sub>B</sub>)<sup>2</sup> = d<sub>B</sub><sup>2</sup>
+	  </td>
+	  <td>
+	    (Eq. 2)
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    (x - X<sub>C</sub>)<sup>2</sup> + y<sup>2</sup> = d<sub>C</sub><sup>2</sup>
+	  </td>
+	  <td>
+	    (Eq. 3)
+	  </td>
+	</tr>
+      </table>
+      
+      <p>
+	Assim, a partir das Equações 1 e 2, temos:
+      </p>
+      
+      
+      <table cellpadding="10"> <!-- style="width:100%"> -->
+	<tr>
+	  <td>
+	    y =  (d<sub>A</sub><sup>2</sup> + Y<sub>B</sub><sup>2</sup> - d<sub>B</sub><sup>2</sup>) / 2Y<sub>B</sub>
+	  </td>
+	  <td>
+	    (Eq. 4)
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    x = + sqrt(d<sub>A</sub><sup>2</sup> - y<sup>2</sup>) <b>OU</b> - sqrt(d<sub>A</sub><sup>2</sup> - y<sup>2</sup>)
+	  </td>
+	  <td>
+	    (Eq. 5)
+	  </td>
+	</tr>
+      </table>
+      
+      <p>
+	Para encontrar o x correto, basta substituir os dois valores possíveis na Equação 3 e verificar qual
+	mais se aproxima de satisfazer a igualdade.
+      </p>
+
+      <h4>Implementação da Raiz Quadrada</h4>
+      
+      <ul>
+	<li>
+	  Sugerimos a utilização do mesmo algoritmo utilizado no laboratório 2.
+	</li>
+	<li>
+	  10 Iterações são suficientes.
+	</li>
+	<li>
+	  Neste laboratório, aceitaremos soluções aproximadas para o problema.
+	</li>
+      </ul>
+
+      <h4>Processamento dos dados de entrada</h4>
+
+      <ul>
+	<li>
+	  Os dados de entrada são representados como cadeias de caracteres na codificação ASCII.
+	  Dessa forma, o valor 2240 é representado como a cadeia de caracteres '2', '2', '4', '0', que
+	  possuem os valores numéricos 50, 50, 52, e 48. Seu código deve converter esta cadeia de
+	  caracteres para valores numéricos nos registradores. Neste exemplo, a conversão se dá por
+	  (50-48)*10<sup>3</sup> + (50-48)*10<sup>2</sup> + (52-48)*10<sup>1</sup> +
+	  (48-48)*10<sup>0</sup> = 224010.
+	</li>
+	<li>
+	  + != -: Lembre-se de processar o sinal.
+	</li>
+      </ul>
+
+      <p>
+	A imagem a seguir uma tabela com os códigos ASCII.
+      </p>
+
+      <img width="1024" alt="Tabela ASCII" src="./1024px-Ascii_Table-nocolor.svg.png"/>
+      <br/>
+	Fonte: 	<a title="ZZT32 [Public domain], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Ascii_Table-nocolor.svg">
+	  https://commons.wikimedia.org/wiki/File:Ascii_Table-nocolor.svg</a>
+	
+
+      <h3>Entrega</h3>
+
+      <p>
+	<b>
+	  Você deve submeter um arquivo no SuSy chamado raXXXXXX-lab6.s, em que XXXXXX é seu RA com 6 dígitos.
+	</b>
+      </p>
+      
+      <p>
+	Endereço para a entrega da atividade no sistema SuSy:
+        <a href="https://susy.ic.unicamp.br:9999/mc404ab/06a" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/06a</a> ou
+	<a href="https://susy.ic.unicamp.br:9999/mc404ab/06b" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/06b</a>
+      </p>
+
+    </div>
+    
+</body></html>
