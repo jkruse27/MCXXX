@@ -81,45 +81,25 @@ receive_number:
   end6:
     mv a0, t3
     li a1, 1
-    jalr x0, tp, 0
+    jalr x0, sp, 0
   end7:
     mv a0, t3
     li a1, 0
-    jalr x0, tp, 0
+    jalr x0, sp, 0
 
 # Ignora toda a linha do head
 ignore_head:
   loop:
-    li a0, 0          # stdin
-    la a1, char         # discards
-    li a2, 1          # size 1
-    li a7, 63         # syscall read
-    ecall
+    jal sp, receive_number
+    bne a1, x0, loop  # se a letra for \n, sai do loop
 
-    la t0, char
-    lb t0, 0(t0)
-
-    addi t0, t0, -10  # verifica se a letra e '\n' ('\n' = 10), se n - 10 = 0, n = '\n'
-    bne t0, x0, loop  # se a letra for \n, sai do loop
-
-  jalr x0, t1, 0
+  jalr x0, tp, 0
 
 # Ignora a palavra Program
 ignore_program:
-  loop1:
-    li a0, 0          # stdin
-    la a1, char         # discards
-    li a2, 1          # size 1
-    li a7, 63         # syscall read
-    ecall
+  jal sp, receive_number
 
-    la t0, char
-    lb t0, 0(t0)
-
-    addi t0, t0, -32  # verifica se a letra e ' ' (' ' = 32), se n - 32 = 0, n = ' '
-    bne t0, x0, loop1  # se a letra for ' ', sai do loop
-
-  jalr x0, t1, 0
+  jalr x0, tp, 0
 
 # Trata cada linha dependendo do caso
 get_program:
@@ -137,18 +117,22 @@ get_program:
   li t1, 80         # Se a letra for "p" indica que e um program
   beq t0, t1, p
 
-
   la s0, linha
+
   la s1, bpm
   lw s1, 0(s1)
+
   la s2, ticks
   lw s2, 0(s2)
+
   li s3, 10
   div s1, s1, s3
   li s3, 6000
+  mv t3, t0
+  addi t3, t3, -48
 
   #Recebe o primeiro numero, converte e salva
-  jal tp, receive_number
+  jal sp, receive_number
   beq x0, a1, end5
   div a0, a0, s1
   mul a0, a0, s3
@@ -157,7 +141,7 @@ get_program:
   addi s0, s0, 4
 
   #Recebe o segundo numero, converte e salva
-  jal tp, receive_number
+  jal sp, receive_number
   div a0, a0, s1
   mul a0, a0, s3
   div a0, a0, s2
@@ -165,11 +149,10 @@ get_program:
   addi s0, s0, 4
 
   loops:
-    jal tp, receive_number
+    jal sp, receive_number
     sw a0, 0(s0)
     addi s0, s0, 4
-    beq a1, x0, continue
-    j loops
+    bne a1, x0, loops
 
   continue:
     la t0, linha
@@ -190,9 +173,8 @@ get_program:
     loopi:
       and s4, s3, a0
       sw s4, 0(a0)
-      addi a0, a0, 16
-      bne a0, a1, loopi
-
+      addi a0, a0, 64
+      bge a1, a0, loopi
 
     j end1
   end5:
@@ -200,33 +182,18 @@ get_program:
     ret
 
   h:
-    jal t1, ignore_head
+    jal tp, ignore_head
     j end1
   p:
-    jal t1, ignore_program
+    jal tp, ignore_program
     loop3:
-      li a0, 0          # stdin
-      la a1, char         # discards
-      li a2, 1          # size 1
-      li a7, 63         # syscall read
-      ecall
+      jal sp, receive_number
 
-      la t0, char
-      lb t0, 0(t0)
-
-      addi t1, t0, -10        # verifica se a letra e '\n' ('\n' = 10), se n - 10 = 0, n = '\n'
-      bne t1, x0, line_end
-
-      addi t1, t1, -22        # verifica se a letra e ' ' (' ' = 32), se n - 32 = 0, n = ' '
-      bne t1, x0, new_word
-
-      li t2, 10
-      mul a3, a3, t2
-      addi a3, t0, -48
+      bne a1, x0, new_word
       j loop3
 
       new_word:
-        mv s0, a3
+        mv s0, a0
         j loop3               # se a letra for ' ', sai do loop
 
       line_end:               # Quando chega no final da linha, adiciona o intrumento na faixa da lista C
@@ -235,7 +202,7 @@ get_program:
         addi s0, s0, -1
         mul s0, s0, t5        # Adiciona a 4*(faixa - 1) e depois soma com a posicao inicial para achar a posicao do vetor
         add t0, t0, s0
-        sw a3, 0(t0)          # Salva o valor na posicao certa do vetor C
+        sw a0, 0(t0)          # Salva o valor na posicao certa do vetor C
 
   end1:
     li a0, 1
@@ -246,49 +213,15 @@ get_program:
 _start:
   ############  Implemente o Parser aqui  #############
   # ---------------------- Pega o bpm e o tick ------------------------#
-  oloop:
-    li a0, 0
-    la a1, char
-    li a2, 1
-    li a7, 63
-    ecall
+  jal sp, receive_number
 
-    la t0, char
-    lb t0, 0(t0)
-    li t5, 10
-    mv t1, t0
-    addi t1, t1, -32
-    beq x0, t1, end3
-    addi t0, t0, -48
-    mul a0, a0, t5
-    add a0, a0, t0
-    j oloop
+  la t0, bpm
+  sw a0, 0(t0)
 
-    end3:
-      la t0, bpm
-      sw a0, 0(t0)
+  jal sp, receive_number
 
-      oloop2:
-        li a0, 0
-        la a1, char
-        li a2, 1
-        li a7, 63
-        ecall
-
-        li t5, 10
-        la t0, char
-        lb t0, 0(t0)
-        mv t1, t0
-        addi t1, t1, -10
-        beq x0, t1, end4
-        addi t0, t0, -48
-        mul a0, a0, t5
-        add a0, a0, t0
-        j oloop2
-
-      end4:
-        la t0, ticks
-        sw a0, 0(t0)
+  la t0, ticks
+  sw a0, 0(t0)
 
   # ------------------------ Zera a Lista C -------------------------- #
   la t0, C                # Carrega a posicao da lista
