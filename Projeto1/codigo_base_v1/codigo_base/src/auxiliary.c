@@ -34,7 +34,7 @@ long int dec(char *ptr){
 /*
   Cria um novo elemento, adiciona-o ao inicio da lista rotulo e retorna a nova lista
 */
-Rotulo *new_r_node(char *name, unsigned line, Side side, Rotulo *atual){
+Rotulo *new_r_node(char *name, int line, Side side, Rotulo *atual){
 
   Rotulo *new_element = malloc(sizeof(Rotulo));
   new_element->name = name;
@@ -149,11 +149,15 @@ char *complete_hex(char *hex, char type){
     string = malloc(4*sizeof(char));
     string[3] = '\0';
 
-    for(int j = 0; j < 3; j++)
+    for(int j = 0, k = 2; j < 3; j++)
       if(j < 3 - len + 2)
         string[j] = '0';
-      else
-        string[j] = hex[len - 3 + j];
+      else{
+        if(hex[k] < 58)
+          string[j] = hex[k++];
+        else
+          string[j] = hex[k++] - 32;
+      }
 
   }else{
     string = malloc(14*sizeof(char));
@@ -164,9 +168,12 @@ char *complete_hex(char *hex, char type){
     for(int j = 0, k = 2; j < 10; j++)
       if(j < 10 - len + 2)
         string1[j] = '0';
-      else
-        string1[j] = hex[k++] - 32;
-
+      else{
+        if(hex[k] < 58)
+          string1[j] = hex[k++];
+        else
+          string1[j] = hex[k++] - 32;
+      }
     for(int j = 0, k = 0; j < 13; j++){
       if(j == 2 || j == 6 || j == 9)
         string[j] = ' ';
@@ -210,4 +217,40 @@ char *get_word(char *word, Rotulo *r_list, Set *s_list, char command){
   }
 
   return NULL;
+}
+
+/*
+  Retorna o rotulo a que se refere um rotulo de uma instrucao
+*/
+Rotulo *get_rotulo(char *word, Rotulo *r_list){
+  Rotulo *r_aux = r_list;
+
+  while(r_aux != NULL){
+    if(!strcmp(r_aux->name, word)){
+      return r_aux;
+    }
+    r_aux = r_aux->next_rotulo;
+  }
+
+  return NULL;
+}
+
+/*
+  Retorna o valor em hexa do numero equivalente do set
+*/
+char *get_set(char *word, Set *s_list){
+    Set *s_aux = s_list;
+    while(s_aux != NULL){
+      if(!strcmp(s_aux->name, word)){
+        if(s_aux->type == Hexadecimal)
+          return complete_hex(s_aux->value_set, THREE_CHARS);
+        else{
+          int a = dec(s_aux->value_set);
+          return dec_to_hex(a, THREE_CHARS);
+        }
+      }
+      s_aux = s_aux->next_set;
+    }
+
+    return NULL;
 }

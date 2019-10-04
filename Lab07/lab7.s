@@ -57,6 +57,7 @@ play_all_channels:
 # Recebe um numero e transforma em binario salvo em a0, se for seguido de espaco deixa
 # em a1 1 e se for seguido de \n deixa em a1 0
 receive_number:
+  li t3, 0
   loops1:
     li a0, 0
     la a1, char
@@ -64,8 +65,7 @@ receive_number:
     li a7, 63
     ecall
 
-    la t1, char
-    lb t1, 0(t1)
+    lbu t1, 0(a1)
 
     li t2, 32
     beq t1, t2, end6
@@ -98,7 +98,16 @@ ignore_head:
 # Ignora a palavra Program
 ignore_program:
   jal sp, receive_number
-
+  li a0, 0
+  la a1, char
+  li a2, 1
+  li a7, 63
+  ecall
+  li a0, 0
+  la a1, char
+  li a2, 1
+  li a7, 63
+  ecall
   jalr x0, tp, 0
 
 # Trata cada linha dependendo do caso
@@ -110,7 +119,7 @@ get_program:
   ecall
 
   la t0, char
-  lb t0, 0(t0)
+  lbu t0, 0(t0)
 
   li t1, 72         # Se a letra for "h" indica que e um head
   beq t0, t1, h
@@ -119,10 +128,10 @@ get_program:
 
   la s0, linha
 
-  la s1, bpm
+  la s1, ticks
   lw s1, 0(s1)
 
-  la s2, ticks
+  la s2, bpm
   lw s2, 0(s2)
 
   li s3, 10
@@ -158,23 +167,30 @@ get_program:
     la t0, linha
     la t1, M
     lw a0, 0(t0)      #t inicial (t atual)
+    mv a2, a0
     lw a1, 4(t0)      #t final
     lw s0, 12(t0)     #canal
+    addi s0, s0, -1
+    slli s0, s0, 2
     lw s1, 16(t0)     #f
     lw s2, 20(t0)     #v
 
+    add a2, a2, t1
     slli s1, s1, 24
     slli s2, s2, 16
+    slli a0, a0, 6
     add a0, a0, t1
 
     add a0, a0, s0
     and s3, s1, s2
 
     loopi:
-      and s4, s3, a0
+      sub a3, a1, a2
+      and s4, s3, a3
       sw s4, 0(a0)
+      addi a2, a2, 1
       addi a0, a0, 64
-      bge a1, a0, loopi
+      bge a2, a1, loopi
 
     j end1
   end5:
@@ -189,18 +205,14 @@ get_program:
     loop3:
       jal sp, receive_number
 
-      bne a1, x0, new_word
-      j loop3
-
-      new_word:
-        mv s0, a0
-        j loop3               # se a letra for ' ', sai do loop
+      beq a1, x0, line_end
+      mv s0, a0
+      j loop3               # se a letra for ' ', sai do loop
 
       line_end:               # Quando chega no final da linha, adiciona o intrumento na faixa da lista C
         la t0, C              # Endereco de C
-        li t5, 4
         addi s0, s0, -1
-        mul s0, s0, t5        # Adiciona a 4*(faixa - 1) e depois soma com a posicao inicial para achar a posicao do vetor
+        slli s0, s0, 2        # Adiciona a 4*(faixa - 1) e depois soma com a posicao inicial para achar a posicao do vetor
         add t0, t0, s0
         sw a0, 0(t0)          # Salva o valor na posicao certa do vetor C
 
@@ -212,17 +224,6 @@ get_program:
 .text
 _start:
   ############  Implemente o Parser aqui  #############
-  # ---------------------- Pega o bpm e o tick ------------------------#
-  jal sp, receive_number
-
-  la t0, bpm
-  sw a0, 0(t0)
-
-  jal sp, receive_number
-
-  la t0, ticks
-  sw a0, 0(t0)
-
   # ------------------------ Zera a Lista C -------------------------- #
   la t0, C                # Carrega a posicao da lista
   li t3, 15               # Numero de iteracoes (elementos da lista - 1)
@@ -243,11 +244,21 @@ _start:
     bne x0, t1, loop5     # Enquanto o contador nao for zero, segue o loop
 
   # ------------------- Tratamento da Entrada ----------------------- #
+  # ---------------------- Pega o bpm e o tick ------------------------#
+  jal sp, receive_number
 
+  la t0, bpm
+  sw a0, 0(t0)
+
+  jal sp, receive_number
+
+  la t0, ticks
+  sw a0, 0(t0)
+
+  # --------------------------- Trata cada linha ----------------------------- #
   loop6:
     jal ra, get_program
     bne x0, a0, loop6
-
 
 ############        Fim do Parser       #############
 

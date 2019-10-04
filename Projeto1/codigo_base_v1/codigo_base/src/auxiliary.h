@@ -21,7 +21,7 @@ typedef enum{
 */
 typedef struct Rotulo{
   char *name;
-  unsigned line;
+  int line;
   Side side;
   struct Rotulo *next_rotulo;
 }Rotulo;
@@ -43,7 +43,7 @@ int hex(char *ptr);
 long int dec(char *ptr);
 
 //Cria um novo no na lista de rotulos e retorna o primeiro elemento da nova lista
-Rotulo *new_r_node(char *name, unsigned line, Side side, Rotulo *atual);
+Rotulo *new_r_node(char *name, int line, Side side, Rotulo *atual);
 
 //Cria um novo no na lista de sets e retorna o primeiro elemento da nova lista
 Set *new_s_node(char *name, TipoDoToken type, char *value_set, Set *atual);
@@ -62,3 +62,9 @@ char *complete_hex(char *hex, char type);
 
 //Encontra a palavra a que se refere o word
 char *get_word(char *word, Rotulo *r_list, Set *s_list, char command);
+
+//Encontra o rotulo a que se refere
+Rotulo *get_rotulo(char *word, Rotulo *r_list);
+
+//Encontra o valor do set para a Instrucao
+char *get_set(char *word, Set *s_list);
