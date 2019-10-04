@@ -57,7 +57,6 @@ play_all_channels:
 # Recebe um numero e transforma em binario salvo em a0, se for seguido de espaco deixa
 # em a1 1 e se for seguido de \n deixa em a1 0
 receive_number:
-  li t3, 0
   loops1:
     li a0, 0
     la a1, char
@@ -90,8 +89,15 @@ receive_number:
 # Ignora toda a linha do head
 ignore_head:
   loop:
-    jal sp, receive_number
-    bne a1, x0, loop  # se a letra for \n, sai do loop
+    li a0, 0
+    la a1, char
+    li a2, 1
+    li a7, 63
+    ecall
+
+    lbu a3, 0(a1)
+    li s0, 10
+    bne a3, s0, loop  # se a letra for \n, sai do loop
 
   jalr x0, tp, 0
 
@@ -125,74 +131,77 @@ get_program:
   beq t0, t1, h
   li t1, 80         # Se a letra for "p" indica que e um program
   beq t0, t1, p
+  n:
+    la s0, linha
 
-  la s0, linha
+    la s1, ticks
+    lw s1, 0(s1)
 
-  la s1, ticks
-  lw s1, 0(s1)
+    la s2, bpm
+    lw s2, 0(s2)
 
-  la s2, bpm
-  lw s2, 0(s2)
+    li s3, 10
+    div s1, s1, s3
+    li s3, 6000
+    mv t3, t0
+    addi t3, t3, -48
 
-  li s3, 10
-  div s1, s1, s3
-  li s3, 6000
-  mv t3, t0
-  addi t3, t3, -48
-
-  #Recebe o primeiro numero, converte e salva
-  jal sp, receive_number
-  beq x0, a1, end5
-  div a0, a0, s1
-  mul a0, a0, s3
-  div a0, a0, s2
-  sw a0, 0(s0)
-  addi s0, s0, 4
-
-  #Recebe o segundo numero, converte e salva
-  jal sp, receive_number
-  div a0, a0, s1
-  mul a0, a0, s3
-  div a0, a0, s2
-  sw a0, 0(s0)
-  addi s0, s0, 4
-
-  loops:
+    #Recebe o primeiro numero, converte e salva
     jal sp, receive_number
+    beq x0, a1, end5
+    mul a0, a0, s3
+    div a0, a0, s1
+    div a0, a0, s2
     sw a0, 0(s0)
     addi s0, s0, 4
-    bne a1, x0, loops
 
-  continue:
-    la t0, linha
-    la t1, M
-    lw a0, 0(t0)      #t inicial (t atual)
-    mv a2, a0
-    lw a1, 4(t0)      #t final
-    lw s0, 12(t0)     #canal
-    addi s0, s0, -1
-    slli s0, s0, 2
-    lw s1, 16(t0)     #f
-    lw s2, 20(t0)     #v
+    #Recebe o segundo numero, converte e salva
+    li t3, 0
+    jal sp, receive_number
+    li t3, 0
+    mul a0, a0, s3
+    div a0, a0, s1
+    div a0, a0, s2
+    sw a0, 0(s0)
+    addi s0, s0, 4
 
-    add a2, a2, t1
-    slli s1, s1, 24
-    slli s2, s2, 16
-    slli a0, a0, 6
-    add a0, a0, t1
+    loops:
+      jal sp, receive_number
+      li t3, 0
+      sw a0, 0(s0)
+      addi s0, s0, 4
+      bne a1, x0, loops
 
-    add a0, a0, s0
-    and s3, s1, s2
+    continue:
+      la t0, linha
+      la t1, M
+      lw a0, 0(t0)      #t inicial (t atual)
+      mv a2, a0
+      lw a1, 4(t0)      #t final
+      lw s0, 12(t0)     #canal
+      addi s0, s0, -1
+      slli s0, s0, 2
+      lw s1, 16(t0)     #f
+      lw s2, 20(t0)     #v
 
-    loopi:
-      sub a3, a1, a2
-      and s4, s3, a3
+      slli s1, s1, 24
+      slli s2, s2, 16
+      slli a0, a0, 6
+      add a0, a0, t1
+
+      add a0, a0, s0
+      or s3, s1, s2
+
+      loopi:
+        sub a3, a1, a2
+        or s4, s3, a3
+        sw s4, 0(a0)
+        addi a2, a2, 1
+        addi a0, a0, 64
+        bge a1, a2, loopi
       sw s4, 0(a0)
-      addi a2, a2, 1
-      addi a0, a0, 64
-      bge a2, a1, loopi
+      j end1
 
-    j end1
   end5:
     li a0, 0
     ret
@@ -202,19 +211,26 @@ get_program:
     j end1
   p:
     jal tp, ignore_program
-    loop3:
-      jal sp, receive_number
+    li t3, 0
+    jal sp, receive_number
+    li t3, 0
 
-      beq a1, x0, line_end
-      mv s0, a0
-      j loop3               # se a letra for ' ', sai do loop
+    mv s0, a0
+    jal sp, receive_number
+    li t3, 0
 
-      line_end:               # Quando chega no final da linha, adiciona o intrumento na faixa da lista C
-        la t0, C              # Endereco de C
-        addi s0, s0, -1
-        slli s0, s0, 2        # Adiciona a 4*(faixa - 1) e depois soma com a posicao inicial para achar a posicao do vetor
-        add t0, t0, s0
-        sw a0, 0(t0)          # Salva o valor na posicao certa do vetor C
+    li a0, 0
+    la a1, char
+    li a2, 1
+    li a7, 63
+    ecall
+
+    line_end:               # Quando chega no final da linha, adiciona o intrumento na faixa da lista C
+      la t0, C              # Endereco de C
+      addi s0, s0, -1
+      slli s0, s0, 2        # Adiciona a 4*(faixa - 1) e depois soma com a posicao inicial para achar a posicao do vetor
+      add t0, t0, s0
+      sw a0, 0(t0)          # Salva o valor na posicao certa do vetor C
 
   end1:
     li a0, 1
@@ -245,15 +261,17 @@ _start:
 
   # ------------------- Tratamento da Entrada ----------------------- #
   # ---------------------- Pega o bpm e o tick ------------------------#
+  li t3, 0
   jal sp, receive_number
-
+  li t3, 0
   la t0, bpm
   sw a0, 0(t0)
 
   jal sp, receive_number
-
+  li t3, 0
   la t0, ticks
   sw a0, 0(t0)
+
 
   # --------------------------- Trata cada linha ----------------------------- #
   loop6:
