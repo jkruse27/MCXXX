@@ -2,24 +2,36 @@
 
 ajudaORobinson:
   li sp, 100000000
+  mv s6, ra
   jal inicializaVisitados
+  mv ra, s6
 
   # s0 = x do local
   # s1 = y do local
+  mv s6, ra
   jal posicaoXLocal
+  mv ra, s6
   mv s0, a0
+  mv s6, ra
   jal posicaoYLocal
+  mv ra, s6
   mv s1, a0
 
   # s2 = x atual
   # s3 = y atual
+  mv s6, ra
   jal posicaoYRobinson
+  mv ra, s6
   mv a1, a0
   mv s3, a0
+  mv s6, ra
   jal posicaoXRobinson
+  mv ra, s6
   mv s2, a0
 
+  mv s6, ra
   jal recursiva
+  mv ra, s6
   beq a0, x0, bad_end
   j real_end
 
@@ -50,138 +62,49 @@ recursiva:
   j good_end
 
   lops:
-    #ve se pode ir para x, y+1
-    mv a0, s2
-    addi a1, s3, 1
-    jal daParaPassar
-    beq a0, x0, next
-    mv a0, s2
-    addi a1, s3, 1
-    jal foiVisitado
-    mv a0, s2
-    addi a1, s3, 1
-    jal recursiva
-    beq a0, x0, next
-    j good_end
-
-    next:
-      #ve se pode ir para x+1, y+1
-      addi a0, s2, 1
-      addi a1, s3, 1
-      jal daParaPassar
-      beq a0, x0, next1
-      addi a0, s2, 1
-      addi a1, s3, 1
-      jal foiVisitado
-      bne a0, x0, next1
-      addi a0, s2, 1
-      addi a1, s3, 1
-      jal recursiva
-      beq a0, x0, next1
-      j good_end
-
-    next1:
-      #ve se pode ir para x+1, y
-      addi a0, s2, 1
-      addi a1, s3, 0
-      jal daParaPassar
-      beq a0, x0, next2
-      addi a0, s2, 1
-      addi a1, s3, 0
-      jal foiVisitado
-      bne a0, x0, next2
-      addi a0, s2, 1
-      addi a1, s3, 0
-      jal recursiva
-      beq a0, x0, next2
-      j good_end
-
-    next2:
-      #ve se pode ir para x+1, y-1
-      addi a0, s2, 1
-      addi a1, s3, -1
-      jal daParaPassar
-      beq a0, x0, next3
-      addi a0, s2, 1
-      addi a1, s3, -1
-      jal foiVisitado
-      bne a0, x0, next3
-      addi a0, s2, 1
-      addi a1, s3, -1
-      jal recursiva
-      beq a0, x0, next3
-      j good_end
-
-    next3:
-      #ve se pode ir para x, y-1
-      addi a0, s2, 0
-      addi a1, s3, -1
-      jal daParaPassar
-      beq a0, x0, next4
-      addi a0, s2, 0
-      addi a1, s3, -1
-      jal foiVisitado
-      bne a0, x0, next4
-      addi a0, s2, 0
-      addi a1, s3, -1
-      jal recursiva
-      beq a0, x0, next4
-      j good_end
-
-    next4:
-      #ve se pode ir para x-1, y-1
-      addi a0, s2, -1
-      addi a1, s3, -1
-      jal daParaPassar
-      beq a0, x0, next5
-      addi a0, s2, -1
-      addi a1, s3, -1
-      jal foiVisitado
-      bne a0, x0, next5
-      addi a0, s2, -1
-      addi a1, s3, -1
-      jal recursiva
-      beq a0, x0, next5
-      j good_end
-
-    next5:
-      #ve se pode ir para x-1, y
-      addi a0, s2, -1
-      addi a1, s3, 0
-      jal daParaPassar
-      beq a0, x0, next6
-      addi a0, s2, -1
-      addi a1, s3, 0
-      jal foiVisitado
-      bne a0, x0, next6
-      addi a0, s2, -1
-      addi a1, s3, 0
-      jal recursiva
-      beq a0, x0, next6
-      j good_end
-
-    next6:
-      #ve se pode ir para x-1, y+1
-      addi a0, s2, -1
-      addi a1, s3, 1
-      jal daParaPassar
-      beq a0, x0, ok_end
-      addi a0, s2, -1
-      addi a1, s3, 1
-      jal foiVisitado
-      bne a0, x0, ok_end
-      addi a0, s2, -1
-      addi a1, s3, 1
-      jal recursiva
-      beq a0, x0, ok_end
-      j good_end
-
+    li t3, 1
+    li t0, -1
+    li t2, 2
+    for_x:
+      beq t0, t2, ok_end
+      li t1, -1
+      for_y:
+        beq t3, t1, x_1
+        code:
+          add a0, s2, t0
+          add a1, s3, t1
+          mv s6, ra
+          jal daParaPassar
+          mv ra, s6
+          beq a0, x0, final
+          add a0, s2, t0
+          add a1, s3, t1
+          mv s6, ra
+          jal foiVisitado
+          mv ra, s6
+          add a0, s2, t0
+          add a1, s3, t1
+          mv s6, ra
+          jal recursiva
+          mv ra, s6
+          beq a0, x0, final
+          j good_end
+        x_1:
+          beq t1, t3, final
+          j code
+        final:
+          addi t1, t1, 1
+          bne t1, t2, for_y
+          addi t0, t0, 1
+          j for_x
 
   #Nenhum caminho e possivel a partir desse no
   ok_end:
     mv a0, s2
     mv a1, s3
+    mv s6, ra
     jal foiVisitado
+    mv ra, s6
 
     mv a0, x0
 
