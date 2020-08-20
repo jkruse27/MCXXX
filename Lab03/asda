@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define INPUT "read.txt"
+#define OUTPUT "write.txt"
+
+/*
+Struct contendo todos os dados da pessoa cadastrada
+*/
+typedef struct{
+  long int cpf;
+  char nome[42];
+  char email[32];
+  int idade;
+}cadastro;
+
+/*
+Funcao que auxilia o sort encontrando o indice do menor valor
+*/
+int smallestIndex(cadastro *vetor, int tamanho, int posicao){
+  int index = posicao, i;
+  for(i = posicao + 1; i < 7/*tamanho*/; i++){
+    printf("%d %d\n", vetor[i].idade, vetor[i - 1].idade);
+    if(vetor[i].idade < vetor[i - 1].idade)
+      index = i;
+    else if(vetor[i].idade == vetor[i - 1].idade)
+      if(vetor[i].cpf < vetor[i - 1].cpf)
+        index = i;
+    }
+  return index;
+}
+
+/*
+Funcao que ordena o vetor em ordem crescente de idade e em caso de idades iguais, usa o cpf.
+Utiliza o algoritmo selection sort para o sort.
+*/
+void sort(cadastro *vetor, int tamanho){
+  int i, menor;
+  cadastro aux;
+  for(i = 0; i < 6/*tamanho - 1*/; i++){
+    menor = smallestIndex(vetor, tamanho, i);
+    aux = vetor[i];
+    vetor[i] = vetor[menor];
+    vetor[menor] = aux;
+  }
+}
+
+/*
+Funcao que recebe um vetor e seu tamanho e imprime em um arquivo OUTPUT seu resultado.
+Essa funcao ja libera os espacos de memoria alocados para as variaveis do tipo cadastro e vetores.
+*/
+void write(cadastro *vetor, int tamanho){
+  int i;
+  FILE *arq = fopen(OUTPUT, "w");
+
+  for(i = 0; i < 7/*tamanho*/; i++){
+    fprintf(arq, "%ld, %s %s %d\n", vetor[i].cpf, vetor[i].nome, vetor[i].email, vetor[i].idade);
+    printf("%ld, %s %s %d\n", vetor[i].cpf, vetor[i].nome, vetor[i].email, vetor[i].idade);}
+  fclose(arq);
+}
+
+/*
+Funcao que recebe os valores de um arquivo de input e os salva em variaveis do tipo cadastro,
+que serao salvas em um vetor. Recebe como parametro um ponteiro para onde sera guardado o
+numero de elementos do vetor e retorna o vetor com a memoria ja alocada
+*/
+cadastro* read(int** tamanho){
+  int contadora = 0;
+  char receptora = ' ';
+
+  FILE *arq = fopen(INPUT, "r");
+
+  /*Encontra o numero de pessoas a serem cadastradas*/
+  while(receptora != EOF){
+    receptora = fgetc(arq);
+    if(receptora == '\n')
+      contadora++;
+  }
+  *tamanho = &contadora;
+  rewind(arq);
+
+  /*Aloca dinamicamente esse vetor e recebe em cada posicao o cadastro de uma dessas pessoas*/
+  cadastro *vetor = malloc(contadora * sizeof(cadastro));
+  int i;
+  for(i = 0; i < contadora; i++)
+    fscanf(arq, " %ld, %s %s %d", &vetor[i].cpf, vetor[i].nome, vetor[i].email, &vetor[i].idade);
+  fclose(arq);
+  return vetor;
+}
+
+int main(){
+  int *tamanho;
+  cadastro *vetor;
+
+  /*vetor recebe o vetor ja alocado*/
+  vetor = read(&tamanho);
+
+  sort(vetor, *tamanho);
+
+  write(vetor, *tamanho);
+
+  free(vetor);
+  return 0;
+}
