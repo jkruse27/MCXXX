@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+  <head>
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html" charset="utf-8">
+  </head>
+
+
+  <body style="background: transparent; margin: 0pt">
+    
+    <div class="row-fluid">
+      
+      <h2>Atividade de Laboratório 5</h2>
+
+
+      <h3>Objetivos</h3>
+
+      <p>
+        O objetivo deste laboratório é familiarizar a turma com a
+        infraestrutura para montagem e execução de código RISC-V, que será
+        utilizada no restante do curso. Nesta atividade, é esperado que
+        o aluno compreenda como montar, ligar e executar, no simulador, 
+        um programa escrito em linguagem de montagem do RISC-V, além de
+        depurar o código em linguagem de montagem.
+      </p>
+      
+      <h3>Descrição</h3>
+
+      <p>
+	Neste laboratório, você deve fazer um programa em linguagem
+	de montagem do RISC-V que imprima seu nome seguido do seu RA
+	na tela, na forma "Primeiro_nome - raXXXXXX". O código do
+	programa em linguagem de montagem está disponível em 
+	<a href="./modelo.s"><tt>modelo.s</tt></a>.
+      </p>
+      
+      <p>
+	Note que o arquivo <tt>modelo.s</tt> está bastante comentado.
+	Nessa atividade, <b>você deve alterar a string "MC404\n" para
+	"Seu_nome - raXXXXXX\n" e o tamanho da string</b>, que é
+	copiado para o registrador <tt>r2</tt>.
+      </p>
+
+      <p>
+	Executar um programa escrito em linguagem de montagem do RISC-V
+	exige o uso de um simulador RISC-V, pois os computadores do
+	laboratório possuem processadores com conjunto
+	de instruções da família de arquiteturas x86, sendo assim
+	incompatíveis com código RISC-V.
+      </p>
+
+      <p>
+	Desse modo, a não ser que se utilize um <i>hardware</i> RISC-V,
+	é preciso executar uma sequência de passos para 
+	executar seu programa num computador da família x86.
+      </p>
+
+      <p>
+	Tal sequência, juntamente de uma breve descrição do funcionamento
+	do simulador, está disposta na seção seguinte. Recomenda-se
+	atenção aos passos aqui descritos, pois as etapas são necessárias 
+	para todos os futuros laboratórios.
+      </p>	
+		 
+      <h3>Simulador RISC-V</h3>
+
+      <p>
+	O simulador da arquitetura RISC-V usado nessa disciplina foi
+	criado pela empresa Western Digital para simular o funcionamento 
+	do processador SweRV Core, que é utilizado no micro-controlador de mesmo nome 
+	(<a href="https://blog.westerndigital.com/risc-v-swerv-core-open-source/" target="_blank">https://blog.westerndigital.com/risc-v-swerv-core-open-source/</a>). 
+	Sua implementação original foi escrita em C++, foi planejada para ser executada sobre a arquitetura Intel x86_64 e está disponível no <a href="https://github.com/westerndigitalcorporation/swerv-ISS">GitHub</a> sob a licensa GPLv3.
+	Para facilitar o uso da ferramenta, nós modificamos e compilamos o simulador para JavaScript 
+	(mais especificamente, para <a href="https://webassembly.org">WebAssembly</a> e <a href="http://asmjs.org/spec/latest/">asm.js</a>, utilizando <a href="https://emscripten.org/">Emscripten</a>), 
+	de forma que ele possa ser executado diretamente no navegador.
+	(<font color="red"><b>NOTA: Sugerimos FORTEMENTE o uso do navegador Chrome nos laboratórios</b></font>)
+      </p>
+
+      <p>
+	O micro-controlador SweRV foi planejado para executar apenas em modo
+	máquina, sem a presença de um sistema operacional.  No entanto, o
+	simulador disponibiliza os recursos necessários para a utilização de um
+	sistema operacional simplificado. Na primeira etapa do curso,
+	utilizaremos um sistema operacional simulado para oferecer suporte às
+	chamadas de sistema realizadas pela
+	biblioteca <a href="https://en.wikipedia.org/wiki/Newlib">Newlib</a>. Tal
+	sistema implementa as <i>syscalls</i> mais comuns do Linux, permitindo
+	que um programa, ao executar no simulador, escreva e leia dados de
+	dispositivos.
+  </p>
+	
+      <p>
+	Para montar um programa escrito em linguagem de montagem do
+	RISC-V, originalmente procedemos da mesma forma que já
+	conhecemos: usa-se um montador e em seguida um ligador
+	(<i>linker</i>) para gerar código executável. Contudo, como
+	estamos usando computadores da família x86, vamos utilizar um
+	ambiente de compilação cruzada (<i>cross compiling</i>), de
+	modo que usaremos um montador e um <i>linker</i> que funcionam
+	nas famílias x86, mas que geram código para a arquitetura RISC-V.
+      </p>
+
+      <p> A seguinte sequência de itens sumariza o processo:
+      </p>
+      
+      <ol>
+	<li>Escrever um código em linguagem de montagem do RISC-V. Sugerimos utilizar o editor de texto Visual Studio Code com a extensão "RISC-V Support", que provê destacador de sintaxe -- <i>syntax highlighting</i> -- para o código);</li>
+	<li>Montar o código escrito na etapa anterior, gerando um
+	  arquivo objeto (<tt>.o</tt>);</li>
+	<li>Executar o <i>linker</i> para converter o arquivo objeto
+	  em executável final;</li>
+	<li>Executar o simulador fornecendo o executável.</li>
+      </ol>
+      
+      <p>
+	A seguir, as etapas serão detalhadas e exemplificadas.
+      </p> 
+
+      <h3>Infraestrutura</h3>
+      <p>
+	Todo o ferramental necessário para se trabalhar com o
+	simulador, como montador, <i>linker</i> e depurador estão disponíveis nos laboratórios em
+	<tt>/opt/riscv</tt>. A primeira etapa
+	antes de utilizar as ferramentas é executar o seguinte comando:
+      </p>
+		
+      <p>
+	<b><tt>export PATH=$PATH:/opt/riscv/bin</tt></b>
+      </p>
+	
+      <p>
+	Esse comando inicializa variáveis de ambiente necessárias para
+	o bom funcionamento do conjunto de ferramentas. A partir desse
+	ponto, todos os comandos podem ser executados de qualquer
+	diretório.
+      </p>
+
+      <h4>Montagem e ligação</h4>
+      <p>
+	Para montar seu código em linguagem de montagem, use o comando:
+      </p>
+      
+      <p><b><tt>riscv32-unknown-elf-as -g arquivo_de_entrada.s -o arquivo_de_saida.o</tt></b></p>
+      
+      <p>
+	Note o prefixo <tt>riscv32-unknown-elf-</tt> na ferramenta <tt>as</tt>
+	(GNU <i>assembler</i>) - esse prefixo indica que estamos usando um executável
+	diferente do montador (<i>assembler</i>) nativo, capaz de realizar compilação
+	cruzada. Após essa etapa, tendo o arquivo objeto em mãos, podemos
+	executar o ligador (<i>linker</i>) através do seguinte comando:
+      </p>
+      
+      <p><b><tt>riscv32-unknown-elf-ld -g arquivo_de_entrada.o -o arquivo_de_saida_do_ligador</tt>
+			</b></p>
+			
+      <h4>Simulação</h4>	
+      
+      <p>
+	Por fim, procedemos com a simulação em si.
+      </p>
+
+			<ol>
+				<li>Acesse a página do <a href="https://www.ic.unicamp.br/~edson/disciplinas/mc404/2019-2s/ab/sim1/web/static/sim.html" target="_blank" rel="noopener noreferrer">Simulador RISC-V</a>:</li>
+				<li>Clique em <i>Browse</i> e selecione o executável</li>
+				<li>Clique em <i>Run</i> para iniciar a execução.</li>
+				<li>Observe a saída do seu código (se houver) no painel <i>Standard IO</i>, no final da página</li>
+				<li>Encerre a execução clicando em <i>Stop</i></li>
+			</ol>
+	
+      <p>
+	Note que você pode passar argumentos para a ferramenta através das opções na interface gráfica:
+      
+	<ul>
+	  <li><b>GDB:</b> Habilita ou desabilita o modo de depuração</li>
+	  <li><b>Syscall Emulation:</b> Habilita ou desabilita a simulação do sistema
+	  operacional que dá suporte às chamadas de sistema utilizadas pela Newlib</li>
+	  <li><b>Advanced Options:</b> Permite selecionar os conjuntos de
+	  instruções suportados e passar parâmetros adicionais ao
+	  simulador.</li>
+      </ul>
+
+      </p>
+
+      <h4>Depuração</h4>	
+
+      <p>
+	Por vezes, encontrar um erro num código-fonte em linguagem de
+	máquina não é trivial. Podemos usar a ferramenta GNU gdb para
+	permitir a execução passo a passo do programa e encontrar o
+	erro mais facilmente. Em geral, as etapas para se depurar um
+	programa com o gdb são:
+      </p>
+
+      <ol>
+	<li>Compilar/montar o código-fonte com o parâmetro de
+	  depuração (<tt>-g</tt>) ativado;</li>
+	<li>Ligar o(s) arquivo(s) objeto também com o parâmetro
+	  de depuração ativado;</li>
+	<li>Executar o comando <tt>gdb seu_programa</tt> para invocar
+	  o gdb e começar a depuração.</li>
+      </ol>
+
+      <p>
+	No nosso caso, depuraremos uma aplicação escrita em
+	linguagem de montagem do RISC-V num computador da família x86,
+	logo algumas etapas adicionais são necessárias. Em primeiro
+	lugar, é preciso compilar e ligar seu código com a <i>flag</i>
+	de depuração <tt>-g</tt> ativada, como já fizemos anteriormente. Precisaremos também de um script adicional, que pode ser obtido com o seguinte comando:
+			</p>
+			
+      <p><b><tt>curl http://www.ic.unicamp.br/~edson/disciplinas/mc404/2019-2s/ab/labs/lab05/bridge.py > /tmp/bridge.py</tt></b></p>
+
+      <p>
+	Após isso, selecione normalmente o executável no simulador, habilite a opção GDB e clique em <i>Run</i>.
+	Nesse momento, o simulador será iniciado, mas irá aguardar uma
+	conexão com o gdb na porta 5689. Para efetuar essa conexão e
+	iniciar a simulação, é preciso executar o programa gdb no
+	terminal com a seguinte linha de comando:
+      </p>
+			<p><b><tt>riscv32-unknown-elf-gdb arquivo_de_saida_do_ligador -ex 'target remote | python3 /tmp/bridge.py'</tt></b></p>
+			
+		<!-- <p>Alternativamente, você pode obter o script na mesma linha de comando do GDB:</p>
+      <p><b><tt>riscv32-unknown-elf-gdb arquivo_de_saida_do_ligador -ex 'target remote | python3 bridge.py $(curl http://endereco/bridge.py > bridge.py)'</tt></b></p> -->
+
+      <p>
+	Esse comando conecta o gdb ao simulador; note, no navegador, 
+	que o simulador está a ponto de começar a simulação,
+	não tendo de fato começado devido ao gdb, que está no controle
+	da aplicação. Repare que o
+	simulador começa a executar na primeira linha de sua
+	função <tt>_start</tt>, então o gdb irá parar a execução para
+	que você possa efetuar a depuração.  Nesse ponto, use o
+	comando <b><tt>si</tt></b> (abreviação de
+	<i>step instruction</i>) no gdb para executar seu programa
+	passo a passo. Pode-se usar o comando
+	<b><tt>info register</tt></b> para ver o valor dos
+	registradores. Note que a saída e a entrada padrão da sua
+	aplicação continuará aparecendo no navegador, e não na janela do terminal que está
+	executando o <tt>gdb</tt>.
+	Mais comandos do gdb estão disponíveis no manual da ferramenta gdb em
+	<a href="https://sourceware.org/gdb/current/onlinedocs/gdb"><tt>https://sourceware.org/gdb/current/onlinedocs/gdb</tt></a>.
+      </p>
+		
+
+			<p>Em alguns casos, o script de conexão com o GDB pode falhar em finalizar corretamente. Caso isso ocorra, você pode finaliza-lo com o comando:</p>
+
+			<p><b><tt>killall python3</tt></b></p>
+  
+      
+      <h3>Entrega e avaliação</h3>
+
+      <ul>
+        <li>
+	  <b>Você deve submeter APENAS um arquivo
+             denominado raXXXXXX.s</b> (em que XXXXXX é seu RA com 6 dígitos) que
+             contenha o código em linguagem de montagem.
+	</li>
+      </ul>
+
+      <p>
+	Endereço para a entrega da atividade no sistema SuSy:
+        <a href="https://susy.ic.unicamp.br:9999/mc404ab/05a" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/05a</a> ou
+	<a href="https://susy.ic.unicamp.br:9999/mc404ab/05b" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/05b</a>
+      </p>
+
+
+      <h3>Extra (Instalando o <i>toolkit</i> RISC-V em seu computador)</h3>
+
+      <p>
+	Este passo não é necessário, entretanto, para aqueles que tiverem
+	interesse em instalar o compilador, o montador e o ligador GCC para o
+	RISC-V em seu computador pessoal, segue abaixo uma sequência de comandos
+	parar baixar o código (<tt>git clone</tt>), configurar a compilação
+	(<tt>configure</tt>) e compilar o código (<tt>make</tt>).
+      </p>
+      
+	<pre>  git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+
+  cd riscv-gnu-toolchain
+	  
+  ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d
+
+  make</pre>
+
+      <p>
+	Os comandos configuram o <i>software</i> para que ele seja instalado no
+	diretório <tt>/opt/riscv</tt>. Em alguns sistemas, este processo
+	necessita acesso de superusuário. Neste caso, é importante você executar
+	o comando make com permissão de superusuário (p.ex: <tt>sudo make</tt>).
+      </p>
+      
+	
+    </div>
+  </body>
+</html>

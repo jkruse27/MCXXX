@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+  <head>
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet">
+    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html" charset="utf-8">
+  </head>
+
+  <body style="background: transparent; margin: 0pt">
+    
+    <div class="row-fluid">
+      
+
+      <h2>Atividade de Laboratório 7</h2>
+
+      <h3>Objetivos</h3>
+
+      <p>
+	O objetivo desta atividade é exercitar o uso de operações com <i>bits</i>,
+	controle de fluxo, e acesso a vetores utilizando o conjunto de
+	instruções da arquitetura RISC-V.
+      </p>
+
+      <h3>Descrição</h3>
+
+      <p>
+	<a target="BLANK" href="https://en.wikipedia.org/wiki/MIDI">MIDI</a> (Interface Digital de Instrumentos Musicais,
+	do inglês <i>Musical Instrument Digital Interface</i>) é um padrão de armazenamento e comunicação entre
+	instrumentos musicais, computadores e ferramentas de áudio.
+	Sua estrutura consiste em representar notas musicais através de uma sequência de comandos simples
+	e de fácil reprodução.
+	Um arquivo MIDI possui até 16 canais.
+	A cada canal, um instrumento musical pode ser associado.
+	A melodia é, então, representada como uma lista de notas musicais para cada canal.
+	Cada nota possui ainda sua velocidade, frequência e tempo. 
+      </p>
+
+      <p>
+	Neste laboratório, você deve implementar um tocador de músicas no formato MIDI utilizando a linguagem
+	de montagem do RISC-V. O programa é dividido em duas partes: <i>Parser</i> e <i>Player</i>.
+	O pseudo-código delas pode ser visto no documento <a href="./mc404_lab07.pdf">mc404_lab07.pdf</a>.
+	Para facilitar o problema, nós fornecemos o arquivo base <a href="./lab7.s">lab7.s</a>, que já declara as estruturas de
+	dados e implementa a parte <i>Player</i>.
+	Assim, somente a parte <i>Parser</i> precisa ser implementada e será considerada na avaliação do laboratório. 
+      </p>
+
+
+      <h4>O <i>Parser</i></h4>
+
+      <p>
+	Nesta primeira parte, você deverá ler e interpretar os dados da música.
+	Você receberá a entrada no formato <i>Midigram</i>, uma representação simplificada
+	(e mais compreensível) do formato MIDI. Sua estrutura é ilustrada abaixo. 
+      </p>
+
+<pre>Header 1 15
+Program   8 71 
+8040 8148 4 8 58 76
+8160 8376 4 8 58 76
+8400 8616 4 8 59 76
+8640 8964 4 8 58 76
+12000 12216 4 8 58 76
+12240 12456 4 8 59 76
+12480 12804 4 8 58 76
+15720 15828 4 8 58 76
+...
+82440 82488 15 10 20 20
+82440 82488 15 10 33 13
+82500 82548 15 10 20 18
+82500 82548 15 10 33 12
+88320
+</pre>
+
+      <p>
+	Seu código deverá ler uma linha por vez e identificar seu tipo. No nosso exemplo:
+	<ul>
+	  <li>
+	    Header 1 15
+	    <ul>
+	      <li>Linha de cabeçalho. </li>
+	      <li>Deve ser ignorada.</li>
+	    </ul>
+	  </li>
+	  <li>
+	    Program   8 71
+	    <ul>
+	      <li>
+		Linha de programa. É ela quem define qual instrumento o canal irá tocar.
+		<ul>
+		  <li>No exemplo: O canal 8 tocará o instrumento 71 (o Fagote)</li>
+		</ul>
+	      </li>
+	      <li>Contém a palavra “Program” seguida por dois números inteiros separados por espaços.</li>
+	      <li>Formato: “ Program  canal  instrumento ”. </li>
+	      <li>Você deve ler os valores de canal e de instrumento.</li>
+	      <li>Você deve armazenar, em um vetor, o instrumento programado para o canal.</li>
+	    </ul>
+	  </li>
+	  <li>
+	    8040 8148 4 8 58 76
+	    <ul>
+	      <li>Linha de nota. </li>
+	      <li>Contém sempre 6 números inteiros separados por espaços.</li>
+	      <li>Formato: “Início Fim Track Canal Frequência Velocidade”</li>
+	      <li>Você deverá ler os valores de Início, Fim, Canal, Frequência e Velocidade.</li>
+	      <li>A forma de armazenamento será detalhada a seguir.</li>
+	    </ul>
+	  </li>
+	  <li>
+	    88320
+	    <ul>
+	      <li>Última linha.</li>
+	      <li>Contém apenas um número inteiro.</li>
+	      <li>Deve ser ignorada.</li>
+	    </ul>
+	  </li>
+	</ul>
+      </p>
+
+
+      <h5>Armazenamento dos canais (linhas 4 e 5 do Algoritmo 1)</h5>
+      <p>
+	<ol>
+	  <li>
+	    Use o vetor de inteiros C (já criado no arquivo de template) que possui 16 posições.
+	    Você deve inserir código para inicializá-lo com zeros.
+	  </li>
+	  <li>
+	    Sempre que uma linha de <b>programa</b> for recebida com Canal <i>c</i> e instrumento <i>i</i>:
+	    <ul>
+	      <li>Preencha a posição c do vetor com o valor i.</li>
+	    </ul>
+	  </li>
+	</ol>
+      </p>
+
+	
+      <h5>Armazenamento das notas (linhas 6 a 11 do Algoritmo 1)</h5>
+      <p>
+	<ol>
+	  <li>
+	    Use a matriz de inteiros M (já criada no arquivo de template) que possui 16 colunas e 300 mil linhas. Você deve inserir código para inicializá-la com zeros.
+	  </li>
+	  <li>
+	    Sempre que uma linha de <b>nota</b> for recebida com Início t<sub>ini</sub>, Fim t<sub>end</sub>, canal <i>c</i>, frequência <i>f</i>, e velocidade <i>v</i>:
+	    <ul>
+	      <li>
+		Converta os valores de t<sub>ini</sub> e t<sub>end</sub> para valores de tempo em milisegundos.
+		<ul>
+		  <li>Para isso, basta aplicar a fórmula mostrada nas Linhas 7 e 8 do Algoritmo.</li>
+		  <li>Os parâmetros BPM e ticks serão passado pela entrada padrão antes do arquivo MIDIGRAM. </li>
+		  <li>A tabela a seguir mostra os valores de BPM e ticks para os arquivos de teste (<a href="./music.zip">music.zip</a>).</li>
+		  <li>
+		    Note que, a depender de como a fórmula for aplicada, seu código poderá gerar <i>overflow</i>.
+		    Você deve evitar que isso ocorra. Para isso, você pode dividir um dos parâmetros (BPM ou Ticks) por 10 e multiplicar por 6000 em vez de 60000.
+		  </li>
+		</ul>
+	      </li>
+	      <li>
+		Na Matriz, preencha a coluna <i>c</i> e as linhas de t<sub>ini</sub> até t<sub>end</sub>
+		(considerando os valores já convertidos em milisegundos) com a tripla (<i>f</i>, <i>v</i>, <i>d</i>),
+		onde <i>d</i> = (t<sub>end</sub> - <i>i</i>) e <i>i</i> é valor da linha atual.
+		<ul>
+		  <li>A tripla (<i>f</i>, <i>v</i>, <i>d</i>) deve ser armazenada numa única palavra de memória nesta ordem. </li>
+		  <li>Para isso, <i>f</i> deve ser armazenado nos <i>bits</i> 31..24, <i>v</i> nos <i>bits</i> 23..16, e <i>d</i> nos <i>bits</i> 15..0.</li>
+		</ul>
+	      </li>
+	    </ul>
+	  </li>
+	</ol>
+      </p>
+
+      <table style="border: 1px solid black; padding: 10px;">
+	<tr style="border: 1px solid black; padding: 10px;">
+	  <th style="border: 1px solid black; padding: 10px;">Arquivo</th>
+	  <th style="border: 1px solid black; padding: 10px;">BPM</th>
+	  <th style="border: 1px solid black; padding: 10px;">Ticks</th>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">1</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">105</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">240</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">2</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">124</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">384</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">3</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">78</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">192</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">4</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">67</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">480</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">5</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">170</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">96</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">6</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">114</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">384</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">7</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">100</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">96</td>
+	</tr>
+	<tr  style="border: 1px solid black; padding: 10px;">
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">8</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">67</td>
+	  <td style="text-align:center; border: 1 px solid black; padding: 4 px;">384</td>
+	</tr>
+      </table>
+      
+      
+      <h5>Entrada</h5>
+
+      <p>
+	A entrada será o valor dos parâmetros BPM e ticks (na mesma linha separados por um espaço), seguido pelos dados do arquivo Midigram.
+	Para testar seu código, disponibilizamos 8 arquivos Midigram (<a href="./music.zip">music.zip</a>),
+	mas você pode gerar novos a partir de músicas no formato MIDI (veja como na última seção deste documento).
+      </p>
+
+      <p>
+	Exemplo:
+	<pre>
+105 240
+Header 1 15
+Program   8 71 
+8040 8148 4 8 58 76
+8160 8376 4 8 58 76
+8400 8616 4 8 59 76
+8640 8964 4 8 58 76
+12000 12216 4 8 58 76
+12240 12456 4 8 59 76
+12480 12804 4 8 58 76
+15720 15828 4 8 58 76
+...
+82440 82488 15 10 20 20
+82440 82488 15 10 33 13
+82500 82548 15 10 20 18
+82500 82548 15 10 33 12
+88320</pre>
+      </p>
+
+      <h5>Organização e compilação do parser</h5>
+
+      <p>
+	Seu código do "parser" deve ser implementado no arquivo lab7.s. Além disso:
+	<ul>
+	  <li>
+	    O código do lab7.s deve fazer uso da matriz M e do vetor C já
+	    declarados no arquivo de template. Lembre-se de inserir código para
+	    iniciar estas estruturas como indicado acima.
+	  </li>
+	  <li>
+	    O arquivo lab7.s deve ter uma função chamada "_start", que deverá
+	    conter o código do <i>Parser</i>.
+	  </li>
+	  <li>
+	    O rótulo da função _start deve ser "_start" e deve ser declarado como global usando a diretiva <tt>.globl</tt>.
+	  </li>
+	  <li>
+	    Ao final da função _start, seu código deve continuar executando a partir do rótulo "play".
+	  </li>
+	</ul>
+      </p>
+
+      <p>
+	Execute a compilação e ligação de seu código como de costume.
+	Agora, basta executar o programa lab7 no simulador para testá-lo.
+	Veja a seção Entrada (acima) para entender o formato de entrada.
+      </p>
+
+
+      <h4>O <i>Player</i></h4>
+
+      <p>
+	Embora a implementação dessa etapa já esteja feita no arquivo de template, a leitura
+	dessa seção é importante para o entendimento da infraestrutura a ser utilizada.
+	Além disso, a compreensão do algoritmo pode vir a ser
+	necessária para o trabalho final da disciplina.
+	Uma vez preenchidos a matriz M e o vetor C, você pode reproduzir a música
+	seguindo o Algoritmo 2 do PDF. Para isso, o código implementa a
+	função "play" dentro do arquivo lab7.s da seguinte forma:
+	<ul>
+	  <li>
+	    Um vetor de inteiros P com 16 posições é criado.
+	    <ul>
+	      <li>
+		Um segundo vetor de inteiros P2, com 16 posições, é
+		criado. Apesar do algoritmo utilizar um único vetor P para tudo,
+		você poderia ter problemas de <i>overflow</i> se o fizesse.
+	      </li>
+	    </ul>
+	  </li>
+	  <li>
+	    Em um laço infinito, o código:
+	    <ul>
+	      <li>Obtém o tempo <i>t</i> em milissegundos <u>a partir do início da execução do player</u>.</li>
+	      <li>
+		Percorre cada canal <i>j</i> da linha <i>t</i> da matriz M
+		<ul>
+		  <li>Se a nota armazenada na posição M[t][j] não estiver tocando, chama o Sintetizador para reproduzi-la.</li>
+		</ul>
+	      </li>
+	    </ul>
+	  </li>
+	</ul>
+      </p>
+
+      <h5>Obtenção de tempo</h5>
+
+      <p>
+	O tempo pode ser obtido através da chamada de sistema <i>gettimeofday</i>.
+	No exemplo a seguir, o tempo em milissegundos é carregado em <tt>a0</tt>.
+
+<pre>  la a0, buffer_timeval
+  la a1, buffer_timerzone
+  li a7, 169 # chamada de sistema gettimeofday
+  ecall
+  la a0, buffer_timeval
+  lw t1, 0(a0) # tempo em segundos
+  lw t2, 8(a0) # fração do tempo em microssegundos
+  li t3, 1000
+  mul t1, t1, t3
+  div t2, t2, t3
+  add a0, t2, t1</pre>
+      </p>
+      
+
+      <h5>Chamando o sintetizador</h5>
+
+      <p>Um sintetizador de áudio é um componente capaz de imitar o som de instrumentos musicais convencionais. Em nosso simulador RISC-V, nós simulamos o uso de um sintetizador implementado em um circuito integrado e conectado ao microcontrolador pelo barramento. Para simplificar seu uso no laboratório, a <i>syscall</i> <tt>SynthPlay</tt> foi implementada para tratar da comunicação com o CI.
+	<b>Para conectar o sintetizador ao simulador, é necessário ir à aba "External Devices", seção "Sound Synthesizer", e clicar em "Load Device".</b>
+      </p>
+
+      <p>Exemplo de uso da <i>syscall</i>:
+
+	<pre>  li a0, 25          # instrumento (25: guitarra acústica de nylon) 
+  li a1, 0x1800      # tempo para tocar a nota (d = 0x1800)
+  ori a1, 0x100000   # velocidade da nota (v = 0x10)
+  ori a1, 0x52000000 # frequencia da nota (f = 0x52)
+  li a2, 1           # canal 1
+  li a7, 2048        # chamada de sistema
+  ecall</pre>
+      </p>
+
+      <p>Note que é importante representar a tripla (<i>f</i>, <i>v</i>, <i>d</i>) como indicado na Parte 1 para que o código do <i>Player</i> funcione corretamente.</p>
+
+      <p>Agora, basta executar o programa lab7 no simulador para testá-lo.</p>
+
+      <h3>Entrega</h3>
+
+      <p>
+	<b>Você deve submeter o arquivo lab7.s no SuSy.</b>
+      </p>
+      <p>
+	Endereço para a entrega da atividade no sistema SuSy:
+        <a href="https://susy.ic.unicamp.br:9999/mc404ab/07a" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/07a</a> ou
+	<a href="https://susy.ic.unicamp.br:9999/mc404ab/07b" target="_blank">
+	         https://susy.ic.unicamp.br:9999/mc404ab/07b</a>
+      </p>
+
+
+      <h3>Para diversão!</h3>
+
+      <p>
+	<ul>
+	  <li>Tente acertar qual a música em cada um dos arquivos de exemplo.</li>
+	  <li>Reproduza outros MIDIs, além dos fornecidos (MIDIs são facilmente encontrados na internet). Para isso, instale o <i>software</i> midi2abc:
+	    <ul>
+	      <li>Para instalar (ubuntu): <tt>sudo apt install abcmidi</tt></li>
+	      <li>Para gerar o midigram: <tt>midi2abc musica.mid -midigram > musica.midigram</tt></li>
+	      <li>Para obter o parâmetro BPM: <tt>midi2abc musica.mid -sum | grep Tempo</tt></li>
+	      <li>Para obter o parâmetro ticks: <tt>od -An -j 12 -N 2 --endian=big -vd musica.mid | xargs</tt></li>
+	    </ul>
+	  </li>
+	</ul>
+      </p>
+      
+    </div>
+    
+</body></html>

@@ -1,0 +1,12 @@
+000 09102 0B105   # Encontra y
+001 0A000 21106   # Salva y em 106
+002 15000 21107   # Salva k em 107
+003 01106 0C107   # Divide y/k
+004 0A000 05107   # Soma o resultado anterior com k
+005 15000 21107   # Encontra o novo k e salva em 107
+006 01104 06103
+007 21104 0F003   # Subtrai 1 do contador e testa para ver se e negativo
+008 01107 0D400   # Coloca o resultado em ac e termina o programa caso o contador seja negativo
+102 000000000A    # Gravidade (10)
+103 0000000001    # Costante 1
+104 0000000009    # Contador
